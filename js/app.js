@@ -1,7 +1,5 @@
 const fmt = (v) => v.toFixed(2).replace(".", ",") + " zł";
 
-let cartCount = 0;
-
 const grid = document.getElementById("grid");
 const badge = document.getElementById("badge");
 const toast = document.getElementById("toast");
@@ -19,8 +17,13 @@ function media(product) {
   return `<div class="vialwrap"><div class="vial"><div class="cap"></div><div class="neck"></div><div class="body"><div class="fill" style="height:${product.fill || 70}%"></div></div><div class="shine"></div></div></div>`;
 }
 
+function sizeOptions(prices) {
+  return SIZES.map((s, j) => j === 0 ? s : `${s}[+${(prices[j] - prices[0]).toFixed(2)}]`).join("|");
+}
+
 function card(product) {
   const prices = PRICE_TABLE[product.t];
+  const slug = product.img.split("/").pop().replace(/\.\w+$/, "");
   const el = document.createElement("article");
   el.className = "card";
   el.innerHTML = `
@@ -34,31 +37,34 @@ function card(product) {
     <div class="sizes">${SIZES.map((s, j) => `<div class="size${j === 0 ? " active" : ""}" data-i="${j}">${s}</div>`).join("")}</div>
     <div class="buyrow">
       <div class="price">${fmt(prices[0])}<small>za 2 ml</small></div>
-      <button class="add"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>Dodaj</button>
+      <button
+        class="add snipcart-add-item"
+        type="button"
+        data-item-id="${slug}"
+        data-item-name="${product.h} ${product.n}"
+        data-item-price="${prices[0]}"
+        data-item-image="${product.img}"
+        data-item-url="/"
+        data-item-custom1-name="Rozmiar"
+        data-item-custom1-options="${sizeOptions(prices)}"
+        data-item-custom1-value="${SIZES[0]}"
+      ><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>Dodaj</button>
     </div>`;
 
   const sizeEls = el.querySelectorAll(".size");
   const priceEl = el.querySelector(".price");
+  const addEl = el.querySelector(".add");
   sizeEls.forEach((sizeEl) => sizeEl.addEventListener("click", () => {
     sizeEls.forEach((x) => x.classList.remove("active"));
     sizeEl.classList.add("active");
     const j = +sizeEl.dataset.i;
     priceEl.innerHTML = `${fmt(prices[j])}<small>za ${SIZES[j]}</small>`;
+    addEl.dataset.itemCustom1Value = SIZES[j];
   }));
 
-  el.querySelector(".add").addEventListener("click", addToCart);
   el.querySelector(".fav").addEventListener("click", (e) => e.currentTarget.classList.toggle("active"));
 
   return el;
-}
-
-function addToCart() {
-  cartCount++;
-  badge.textContent = cartCount;
-  badge.classList.add("on");
-  toast.classList.add("show");
-  clearTimeout(addToCart._t);
-  addToCart._t = setTimeout(() => toast.classList.remove("show"), 1400);
 }
 
 function render(list) {
@@ -106,3 +112,17 @@ document.querySelectorAll(".chip").forEach((chip) => chip.addEventListener("clic
 document.getElementById("search").addEventListener("input", applyFilters);
 
 render(PRODUCTS);
+
+document.addEventListener("snipcart.ready", () => {
+  const syncBadge = () => {
+    const count = Snipcart.store.getState().cart.items.count || 0;
+    badge.classList.toggle("on", count > 0);
+  };
+  Snipcart.store.subscribe(syncBadge);
+  syncBadge();
+  Snipcart.events.on("item.added", () => {
+    toast.classList.add("show");
+    clearTimeout(document._toastTimer);
+    document._toastTimer = setTimeout(() => toast.classList.remove("show"), 1400);
+  });
+});
