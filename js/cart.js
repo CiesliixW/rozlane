@@ -1,8 +1,12 @@
 const fmt = (v) => v.toFixed(2).replace(".", ",") + " zł";
 
+const SHIPPING_PRICE = 16.99;
+
 const Cart = (() => {
   const STORAGE_KEY = "rozlane_cart";
+  const POINT_KEY = "rozlane_delivery_point";
   let lines = load();
+  let deliveryPoint = loadPoint();
 
   function load() {
     try {
@@ -15,6 +19,23 @@ const Cart = (() => {
 
   function save() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(lines));
+  }
+
+  function loadPoint() {
+    try {
+      const raw = localStorage.getItem(POINT_KEY);
+      return raw ? JSON.parse(raw) : null;
+    } catch {
+      return null;
+    }
+  }
+
+  function savePoint() {
+    if (deliveryPoint) {
+      localStorage.setItem(POINT_KEY, JSON.stringify(deliveryPoint));
+    } else {
+      localStorage.removeItem(POINT_KEY);
+    }
   }
 
   function findProduct(id) {
@@ -54,8 +75,22 @@ const Cart = (() => {
     render();
   }
 
-  function getTotal() {
+  function setDeliveryPoint(point) {
+    deliveryPoint = point;
+    savePoint();
+    render();
+  }
+
+  function getDeliveryPoint() {
+    return deliveryPoint;
+  }
+
+  function getSubtotal() {
     return lines.reduce((sum, l) => sum + priceOf(l) * l.qty, 0);
+  }
+
+  function getTotal() {
+    return getSubtotal() + (lines.length ? SHIPPING_PRICE : 0);
   }
 
   function getCount() {
@@ -70,6 +105,9 @@ const Cart = (() => {
 
     const itemsEl = document.getElementById("cartItems");
     const totalEl = document.getElementById("cartTotal");
+    const shippingRow = document.getElementById("cartShippingRow");
+    const pointEl = document.getElementById("deliveryPointStatus");
+    const checkoutBtn = document.getElementById("cartCheckout");
     if (!itemsEl) return;
 
     if (!lines.length) {
@@ -95,11 +133,28 @@ const Cart = (() => {
           </div>`;
       }).join("");
     }
+
+    shippingRow.style.display = lines.length ? "flex" : "none";
+    document.getElementById("cartShippingPrice").textContent = fmt(SHIPPING_PRICE);
     totalEl.textContent = fmt(getTotal());
+
+    if (deliveryPoint) {
+      pointEl.innerHTML = `<b>Paczkomat ${deliveryPoint.code}</b><span>${deliveryPoint.address || ""}</span>`;
+      pointEl.classList.add("set");
+    } else {
+      pointEl.innerHTML = "Nie wybrano paczkomatu";
+      pointEl.classList.remove("set");
+    }
+
+    checkoutBtn.disabled = !lines.length;
   }
 
   async function checkout() {
     if (!lines.length) return;
+    if (!deliveryPoint) {
+      document.dispatchEvent(new CustomEvent("cart:need-point"));
+      return;
+    }
     const checkoutBtn = document.getElementById("cartCheckout");
     checkoutBtn.disabled = true;
     checkoutBtn.textContent = "Przekierowuję…";
@@ -109,6 +164,7 @@ const Cart = (() => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           items: lines.map((l) => ({ id: l.id, size: l.size, qty: l.qty })),
+          deliveryPoint,
           origin: window.location.origin,
         }),
       });
@@ -139,5 +195,5 @@ const Cart = (() => {
     document.getElementById("cartCheckout").addEventListener("click", checkout);
   });
 
-  return { addItem, getCount, render };
+  return { addItem, getCount, getDeliveryPoint, setDeliveryPoint, render };
 })();

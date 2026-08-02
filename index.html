@@ -19,6 +19,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="https://geowidget.inpost.pl/inpost-geowidget.css">
+<script src="https://geowidget.inpost.pl/inpost-geowidget.js" defer></script>
 </head>
 <body>
 
@@ -112,10 +114,31 @@
   </div>
   <div class="cart-items" id="cartItems"></div>
   <div class="cart-foot">
+    <div class="cart-delivery">
+      <div class="delivery-point" id="deliveryPointStatus">Nie wybrano paczkomatu</div>
+      <button class="delivery-pick" id="pickPointBtn" type="button">Wybierz paczkomat</button>
+    </div>
+    <div class="cart-row" id="cartShippingRow"><span>Dostawa (InPost)</span><span id="cartShippingPrice"></span></div>
     <div class="cart-total"><span>Razem</span><strong id="cartTotal">0,00 zł</strong></div>
-    <button class="cart-checkout" id="cartCheckout">Przejdź do płatności</button>
+    <button class="cart-checkout" id="cartCheckout" disabled>Przejdź do płatności</button>
   </div>
 </aside>
+
+<div class="point-overlay" id="pointOverlay"></div>
+<div class="point-picker" id="pointPicker">
+  <div class="point-picker-head">
+    <h3>Wybierz paczkomat</h3>
+    <button class="cart-close" id="pointClose" aria-label="Zamknij">✕</button>
+  </div>
+  <div class="point-picker-body">
+    <inpost-geowidget
+      token="eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJzQlpXVzFNZzVlQnpDYU1XU3JvTlBjRWFveFpXcW9Ua2FuZVB3X291LWxvIn0.eyJleHAiOjIxMDEwMzkyMzIsImlhdCI6MTc4NTY3OTIzMiwianRpIjoiMTIyMzk4NzUtYWQ0ZS00NjYwLTgyODgtZmY1ZjhkZGEyZGMzIiwiaXNzIjoiaHR0cHM6Ly9sb2dpbi5pbnBvc3QucGwvYXV0aC9yZWFsbXMvZXh0ZXJuYWwiLCJzdWIiOiJmOjEyNDc1MDUxLTFjMDMtNGU1OS1iYTBjLTJiNDU2OTVlZjUzNTp2U3RzNXZGSXhfOUw2VFVqcF96X1FMejlvSWdmSk9tOE9VYS1RRXVWYl9BIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoic2hpcHgiLCJzZXNzaW9uX3N0YXRlIjoiNWJiMWIzMDctNWM5My00ZjAxLTg4ZWYtZmM4NTJhMDI4NGI2Iiwic2NvcGUiOiJvcGVuaWQgYXBpOmFwaXBvaW50cyIsInNpZCI6IjViYjFiMzA3LTVjOTMtNGYwMS04OGVmLWZjODUyYTAyODRiNiIsImFsbG93ZWRfcmVmZXJyZXJzIjoicm96bGFuZS5wbCIsInV1aWQiOiI0YjZiMGRlZC05OGZhLTQ1MDgtYjEwYi01YmQ5NzQwNGI5ZjIifQ.dNsQjbJyhEdolrJWTFPR3eyasUp7OMlCobgB4SRE3MnIFr8FyO8rpRZsDeOkRXy8pZ1E1Kq76ullI-BYQgdRhLLyDRFkR2KeU7MGOiy4q-PDOp7u45LONsS8hFTbn4N_7M9JPw0Z4EmU2YtKs-ucUn3gYtvzgOhKHQSjuvFwTl2wUqskJZtt8bCVoM9gB61MlmBqK3B2gyuSLxG1583TgIHBpiDhvWK7Pyy7o1nfE2d0z0nHvG8MXM0G7HEp4GedUlqI31jk0bK2Hs9T5pEn2ff_uXTAVa6fZLxdwEQwMDFGZPOjnp8-imYyzCVHE7wg77AmlvJPLHdd90ZEznhZgQ"
+      language="pl"
+      config="parcelCollect"
+      onpoint="onInpostPointSelected"
+    ></inpost-geowidget>
+  </div>
+</div>
 
 <script src="js/products.js" defer></script>
 <script src="js/cart.js" defer></script>

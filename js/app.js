@@ -117,3 +117,30 @@ function closeCart() {
 cartIcon.addEventListener("click", openCart);
 cartOverlay.addEventListener("click", closeCart);
 document.getElementById("cartClose").addEventListener("click", closeCart);
+
+const pointPicker = document.getElementById("pointPicker");
+const pointOverlay = document.getElementById("pointOverlay");
+
+function openPointPicker() {
+  pointPicker.classList.add("open");
+  pointOverlay.classList.add("open");
+}
+function closePointPicker() {
+  pointPicker.classList.remove("open");
+  pointOverlay.classList.remove("open");
+}
+
+document.getElementById("pickPointBtn").addEventListener("click", openPointPicker);
+pointOverlay.addEventListener("click", closePointPicker);
+document.getElementById("pointClose").addEventListener("click", closePointPicker);
+
+document.addEventListener("cart:need-point", () => {
+  openCart();
+  openPointPicker();
+});
+
+window.onInpostPointSelected = function (point) {
+  const address = point.address ? [point.address.line1, point.address.line2].filter(Boolean).join(", ") : "";
+  Cart.setDeliveryPoint({ code: point.name, address });
+  closePointPicker();
+};

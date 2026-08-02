@@ -3,6 +3,8 @@ const { PRODUCTS, PRICE_TABLE, SIZES } = require("../js/products.js");
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
+const SHIPPING_PRICE = 16.99;
+
 module.exports = async function handler(req, res) {
   if (req.method !== "POST") {
     res.setHeader("Allow", "POST");
@@ -18,9 +20,12 @@ module.exports = async function handler(req, res) {
     }
   }
 
-  const { items, origin } = body || {};
+  const { items, origin, deliveryPoint } = body || {};
   if (!Array.isArray(items) || items.length === 0) {
     return res.status(400).json({ error: "Cart is empty" });
+  }
+  if (!deliveryPoint || typeof deliveryPoint.code !== "string" || !deliveryPoint.code.trim()) {
+    return res.status(400).json({ error: "Missing InPost parcel locker selection" });
   }
 
   const line_items = [];
@@ -43,11 +48,28 @@ module.exports = async function handler(req, res) {
   }
 
   const baseUrl = origin || `https://${req.headers.host}`;
+  const metadata = {
+    inpost_point: deliveryPoint.code,
+    inpost_address: (deliveryPoint.address || "").slice(0, 500),
+  };
 
   try {
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       line_items,
+      billing_address_collection: "required",
+      shipping_address_collection: { allowed_countries: ["PL"] },
+      shipping_options: [
+        {
+          shipping_rate_data: {
+            type: "fixed_amount",
+            fixed_amount: { amount: Math.round(SHIPPING_PRICE * 100), currency: "pln" },
+            display_name: `InPost Paczkomat (${deliveryPoint.code})`,
+          },
+        },
+      ],
+      metadata,
+      payment_intent_data: { metadata },
       success_url: `${baseUrl}/?checkout=success`,
       cancel_url: `${baseUrl}/?checkout=cancelled`,
     });
