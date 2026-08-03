@@ -75,6 +75,14 @@ const Cart = (() => {
     render();
   }
 
+  function clear() {
+    lines = [];
+    deliveryPoint = null;
+    save();
+    savePoint();
+    render();
+  }
+
   function setDeliveryPoint(point) {
     deliveryPoint = point;
     savePoint();
@@ -195,5 +203,5 @@ const Cart = (() => {
     document.getElementById("cartCheckout").addEventListener("click", checkout);
   });
 
-  return { addItem, getCount, getDeliveryPoint, setDeliveryPoint, render };
+  return { addItem, getCount, getDeliveryPoint, setDeliveryPoint, clear, render };
 })();

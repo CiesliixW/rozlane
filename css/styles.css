@@ -199,6 +199,27 @@
   .legal-callout span{color:var(--muted)}
   .legal-form p{font-size:13.5px;margin-bottom:8px}
 
+  .order-overlay{position:fixed;inset:0;background:rgba(20,16,10,.5);opacity:0;pointer-events:none;transition:opacity .25s;z-index:150}
+  .order-overlay.open{opacity:1;pointer-events:auto}
+  .order-modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.96);width:min(440px,92vw);max-height:86vh;overflow-y:auto;background:var(--surface);border-radius:16px;box-shadow:0 24px 60px rgba(0,0,0,.3);z-index:160;padding:34px 28px 28px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s}
+  .order-modal.open{opacity:1;pointer-events:auto;transform:translate(-50%,-50%) scale(1)}
+  .order-modal .cart-close{position:absolute;top:14px;right:14px}
+  .order-icon{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 18px}
+  .order-icon.success{background:#E3F3EA;color:var(--ok)}
+  .order-icon.cancel{background:var(--accent-soft);color:var(--accent)}
+  .order-modal h3{font-family:var(--serif);font-weight:600;font-size:22px;text-align:center;margin-bottom:8px}
+  .order-status{text-align:center;color:var(--muted);font-size:14px;margin-bottom:20px}
+  .order-status b{color:var(--ink)}
+  .order-id{font-family:var(--mono);font-size:12.5px;letter-spacing:-.01em}
+  .order-lines{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:12px 0;margin-bottom:14px}
+  .order-line{display:flex;justify-content:space-between;font-size:13.5px;color:var(--muted);padding:6px 0}
+  .order-total{display:flex;justify-content:space-between;align-items:baseline;font-size:15px;margin-bottom:16px}
+  .order-total strong{font-size:19px}
+  .order-delivery{font-size:13.5px;color:var(--muted);margin-bottom:8px}
+  .order-delivery b{color:var(--ink)}
+  .order-note{font-size:13px;color:var(--faint);text-align:center;margin-bottom:20px}
+  #orderModal .cart-checkout{margin-top:4px}
+
   @media (max-width:860px){
     .hero-banner{min-height:540px}
     .hero-banner .scrim{background:linear-gradient(180deg,rgba(8,8,11,.5) 0%,rgba(8,8,11,.9) 78%)}

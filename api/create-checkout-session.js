@@ -58,6 +58,7 @@ module.exports = async function handler(req, res) {
       mode: "payment",
       line_items,
       billing_address_collection: "required",
+      phone_number_collection: { enabled: true },
       shipping_address_collection: { allowed_countries: ["PL"] },
       shipping_options: [
         {
@@ -70,7 +71,7 @@ module.exports = async function handler(req, res) {
       ],
       metadata,
       payment_intent_data: { metadata },
-      success_url: `${baseUrl}/?checkout=success`,
+      success_url: `${baseUrl}/?checkout=success&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${baseUrl}/?checkout=cancelled`,
     });
     return res.status(200).json({ url: session.url });
