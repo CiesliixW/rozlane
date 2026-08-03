@@ -1,5 +1,6 @@
 const Stripe = require("stripe");
 const { PRODUCTS, PRICE_TABLE, SIZES } = require("../js/products.js");
+const Promotions = require("../js/promotions.js");
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -28,6 +29,7 @@ module.exports = async function handler(req, res) {
     return res.status(400).json({ error: "Missing InPost parcel locker selection" });
   }
 
+  const validatedItems = [];
   const line_items = [];
   for (const item of items) {
     const product = PRODUCTS.find((p) => p.id === item.id);
@@ -37,6 +39,7 @@ module.exports = async function handler(req, res) {
       return res.status(400).json({ error: `Invalid cart item: ${item.id}` });
     }
     const price = PRICE_TABLE[product.t][sizeIndex];
+    validatedItems.push({ id: item.id, size: item.size, qty });
     line_items.push({
       price_data: {
         currency: "pln",
@@ -47,6 +50,9 @@ module.exports = async function handler(req, res) {
     });
   }
 
+  const promo = Promotions.computePromo(validatedItems);
+  const shippingAmount = promo.freeShipping ? 0 : Math.round(SHIPPING_PRICE * 100);
+
   const baseUrl = origin || `https://${req.headers.host}`;
   const metadata = {
     inpost_point: deliveryPoint.code,
@@ -54,7 +60,7 @@ module.exports = async function handler(req, res) {
   };
 
   try {
-    const session = await stripe.checkout.sessions.create({
+    const sessionParams = {
       mode: "payment",
       line_items,
       billing_address_collection: "required",
@@ -64,8 +70,10 @@ module.exports = async function handler(req, res) {
         {
           shipping_rate_data: {
             type: "fixed_amount",
-            fixed_amount: { amount: Math.round(SHIPPING_PRICE * 100), currency: "pln" },
-            display_name: `InPost Paczkomat (${deliveryPoint.code})`,
+            fixed_amount: { amount: shippingAmount, currency: "pln" },
+            display_name: promo.freeShipping
+              ? `InPost Paczkomat (${deliveryPoint.code}) — gratis`
+              : `InPost Paczkomat (${deliveryPoint.code})`,
           },
         },
       ],
@@ -73,7 +81,19 @@ module.exports = async function handler(req, res) {
       payment_intent_data: { metadata },
       success_url: `${baseUrl}/?checkout=success&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${baseUrl}/?checkout=cancelled`,
-    });
+    };
+
+    if (promo.discount > 0) {
+      const coupon = await stripe.coupons.create({
+        amount_off: Math.round(promo.discount * 100),
+        currency: "pln",
+        duration: "once",
+        name: "Promocja odlewek",
+      });
+      sessionParams.discounts = [{ coupon: coupon.id }];
+    }
+
+    const session = await stripe.checkout.sessions.create(sessionParams);
     return res.status(200).json({ url: session.url });
   } catch (err) {
     return res.status(500).json({ error: "Nie udało się utworzyć sesji płatności" });

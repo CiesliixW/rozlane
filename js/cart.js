@@ -47,7 +47,55 @@ const Cart = (() => {
     return PRICE_TABLE[product.t][SIZES.indexOf(line.size)];
   }
 
+  function countForSize(size) {
+    return lines.filter((l) => l.size === size).reduce((s, l) => s + l.qty, 0);
+  }
+
+  function buildPromoMessage(size, count) {
+    const status = Promotions.getSizeStatus(size, count);
+    if (!status) return null;
+    const parts = [];
+
+    if (status.freeShippingMet) {
+      parts.push("Masz darmową wysyłkę!");
+    } else {
+      parts.push(`Dodaj jeszcze ${status.freeShippingRemaining} (${size}) i miej darmową wysyłkę!`);
+    }
+
+    if (status.nextFreeTier) {
+      const noun = status.nextFreeTier.count === 1 ? "odlewkę" : "odlewki";
+      parts.push(`Dodaj jeszcze ${status.nextFreeTier.remaining} i zyskaj ${noun} gratis!`);
+    } else if (status.currentFreeCount > 0) {
+      const noun = status.currentFreeCount === 1 ? "1 odlewka" : `${status.currentFreeCount} odlewki`;
+      parts.push(`${noun} gratis!`);
+    }
+
+    return parts.join(" ");
+  }
+
+  function showToast(message, celebrate) {
+    const toast = document.getElementById("toast");
+    const toastText = document.getElementById("toastText");
+    toastText.textContent = message;
+    toast.classList.toggle("celebrate", !!celebrate);
+    toast.classList.add("show");
+    clearTimeout(showToast._t);
+    showToast._t = setTimeout(() => toast.classList.remove("show", "celebrate"), celebrate || message.length > 30 ? 4200 : 1400);
+  }
+
+  function buildUnlockMessage(size, before, after) {
+    if (!before || !after) return null;
+    const gains = [];
+    if (!before.freeShippingMet && after.freeShippingMet) gains.push("darmową wysyłkę");
+    const newFree = after.currentFreeCount - before.currentFreeCount;
+    if (newFree > 0) gains.push(newFree === 1 ? "odlewkę gratis" : `${newFree} odlewki gratis`);
+    if (!gains.length) return null;
+    return `🎉 Odblokowano: ${gains.join(" + ")}! (${size})`;
+  }
+
   function addItem(id, size, qty = 1) {
+    const beforeStatus = Promotions.getSizeStatus(size, countForSize(size));
+
     const existing = lines.find((l) => l.id === id && l.size === size);
     if (existing) {
       existing.qty += qty;
@@ -56,7 +104,14 @@ const Cart = (() => {
     }
     save();
     render();
-    document.dispatchEvent(new CustomEvent("cart:item-added"));
+
+    const afterStatus = Promotions.getSizeStatus(size, countForSize(size));
+    const unlockMessage = buildUnlockMessage(size, beforeStatus, afterStatus);
+    if (unlockMessage) {
+      showToast(unlockMessage, true);
+    } else {
+      showToast(buildPromoMessage(size, countForSize(size)) || "Dodano do koszyka");
+    }
   }
 
   function setQty(index, qty) {
@@ -93,16 +148,48 @@ const Cart = (() => {
     return deliveryPoint;
   }
 
+  function getItems() {
+    return lines.map((l) => ({ id: l.id, size: l.size, qty: l.qty }));
+  }
+
   function getSubtotal() {
     return lines.reduce((sum, l) => sum + priceOf(l) * l.qty, 0);
   }
 
-  function getTotal() {
-    return getSubtotal() + (lines.length ? SHIPPING_PRICE : 0);
-  }
-
   function getCount() {
     return lines.reduce((sum, l) => sum + l.qty, 0);
+  }
+
+  function buildPromoBar(size, count) {
+    const rule = Promotions.PROMO_RULES[size];
+    if (!rule) return "";
+    const milestones = [
+      { at: rule.freeShippingAt, label: "Darmowa wysyłka" },
+      ...rule.freeItemTiers.map((t) => ({ at: t.at, label: t.count === 1 ? "Odlewka gratis" : `${t.count} odlewki gratis` })),
+    ].sort((a, b) => a.at - b.at);
+    const max = milestones[milestones.length - 1].at;
+    const pct = Math.min(100, (count / max) * 100);
+    const dots = milestones.map((m) => {
+      const reached = count >= m.at;
+      return `<div class="promo-dot${reached ? " reached" : ""}" style="left:${(m.at / max) * 100}%" title="${m.label} — ${m.at} szt.">${reached ? "✓" : m.at}</div>`;
+    }).join("");
+    return `<div class="promo-track"><div class="promo-track-fill" style="width:${pct}%"></div>${dots}</div>`;
+  }
+
+  function renderPromoProgress() {
+    const container = document.getElementById("promoProgress");
+    if (!container) return;
+    container.innerHTML = Object.keys(Promotions.PROMO_RULES).map((size) => {
+      const count = countForSize(size);
+      if (!count) return "";
+      const message = buildPromoMessage(size, count);
+      return `
+        <div class="promo-note">
+          <div class="promo-note-head"><b>${size}</b><span>${count} szt.</span></div>
+          ${buildPromoBar(size, count)}
+          <div class="promo-note-msg">${message}</div>
+        </div>`;
+    }).join("");
   }
 
   function render() {
@@ -114,6 +201,7 @@ const Cart = (() => {
     const itemsEl = document.getElementById("cartItems");
     const totalEl = document.getElementById("cartTotal");
     const shippingRow = document.getElementById("cartShippingRow");
+    const discountRow = document.getElementById("cartDiscountRow");
     const pointEl = document.getElementById("deliveryPointStatus");
     const checkoutBtn = document.getElementById("cartCheckout");
     if (!itemsEl) return;
@@ -142,9 +230,25 @@ const Cart = (() => {
       }).join("");
     }
 
+    renderPromoProgress();
+
+    const promo = Promotions.computePromo(getItems());
+    const shippingCost = promo.freeShipping ? 0 : SHIPPING_PRICE;
+
     shippingRow.style.display = lines.length ? "flex" : "none";
-    document.getElementById("cartShippingPrice").textContent = fmt(SHIPPING_PRICE);
-    totalEl.textContent = fmt(getTotal());
+    const shippingPriceEl = document.getElementById("cartShippingPrice");
+    shippingPriceEl.textContent = shippingCost === 0 ? "Gratis" : fmt(SHIPPING_PRICE);
+    shippingPriceEl.classList.toggle("free", shippingCost === 0);
+
+    if (promo.discount > 0) {
+      discountRow.style.display = "flex";
+      document.getElementById("cartDiscountPrice").textContent = "−" + fmt(promo.discount);
+    } else {
+      discountRow.style.display = "none";
+    }
+
+    const total = getSubtotal() - promo.discount + (lines.length ? shippingCost : 0);
+    totalEl.textContent = fmt(total);
 
     if (deliveryPoint) {
       pointEl.innerHTML = `<b>Paczkomat ${deliveryPoint.code}</b><span>${deliveryPoint.address || ""}</span>`;
@@ -171,7 +275,7 @@ const Cart = (() => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          items: lines.map((l) => ({ id: l.id, size: l.size, qty: l.qty })),
+          items: getItems(),
           deliveryPoint,
           origin: window.location.origin,
         }),

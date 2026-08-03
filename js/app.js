@@ -1,5 +1,4 @@
 const grid = document.getElementById("grid");
-const toast = document.getElementById("toast");
 const countEl = document.getElementById("count");
 
 function stars(rating) {
@@ -27,7 +26,7 @@ function card(product) {
     <div class="pname">${product.n}</div>
     <div class="notes">${product.no}</div>
     <div class="rating"><span class="stars">${stars(product.r)}</span> ${product.r.toFixed(1).replace(".", ",")} · ${product.c} opinii</div>
-    <div class="sizes">${SIZES.map((s, j) => `<div class="size${j === 0 ? " active" : ""}" data-i="${j}">${s}</div>`).join("")}</div>
+    <div class="sizes">${SIZES.map((s, j) => `<div class="size${j === 0 ? " active" : ""}" data-i="${j}">${s}<span class="spray">${Promotions.spraysForSize(s)} psiknięć</span></div>`).join("")}</div>
     <div class="buyrow">
       <div class="price">${fmt(prices[0])}<small>za 2 ml</small></div>
       <button class="add" type="button"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>Dodaj</button>
@@ -94,12 +93,6 @@ document.querySelectorAll(".chip").forEach((chip) => chip.addEventListener("clic
 document.getElementById("search").addEventListener("input", applyFilters);
 
 render(PRODUCTS);
-
-document.addEventListener("cart:item-added", () => {
-  toast.classList.add("show");
-  clearTimeout(document._toastTimer);
-  document._toastTimer = setTimeout(() => toast.classList.remove("show"), 1400);
-});
 
 const cartIcon = document.getElementById("cart");
 const cartDrawer = document.getElementById("cartDrawer");
