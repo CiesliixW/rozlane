@@ -26,7 +26,8 @@ function card(product) {
     <div class="pname">${product.n}</div>
     <div class="notes">${product.no}</div>
     <div class="rating"><span class="stars">${stars(product.r)}</span> ${product.r.toFixed(1).replace(".", ",")} · ${product.c} opinii</div>
-    <div class="sizes">${SIZES.map((s, j) => `<div class="size${j === 0 ? " active" : ""}" data-i="${j}">${s}<span class="spray">${Promotions.spraysForSize(s)} psiknięć</span></div>`).join("")}</div>
+    <div class="sizes">${SIZES.map((s, j) => `<div class="size${j === 0 ? " active" : ""}" data-i="${j}">${s}</div>`).join("")}</div>
+    <div class="spray-info">~${Promotions.spraysForSize(SIZES[0])} psiknięć</div>
     <div class="buyrow">
       <div class="price">${fmt(prices[0])}<small>za 2 ml</small></div>
       <button class="add" type="button"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>Dodaj</button>
@@ -34,12 +35,14 @@ function card(product) {
 
   const sizeEls = el.querySelectorAll(".size");
   const priceEl = el.querySelector(".price");
+  const sprayEl = el.querySelector(".spray-info");
   sizeEls.forEach((sizeEl) => sizeEl.addEventListener("click", () => {
     sizeEls.forEach((x) => x.classList.remove("active"));
     sizeEl.classList.add("active");
     const j = +sizeEl.dataset.i;
     selectedSize = SIZES[j];
     priceEl.innerHTML = `${fmt(prices[j])}<small>za ${selectedSize}</small>`;
+    sprayEl.textContent = `~${Promotions.spraysForSize(selectedSize)} psiknięć`;
   }));
 
   el.querySelector(".add").addEventListener("click", () => Cart.addItem(product.id, selectedSize));

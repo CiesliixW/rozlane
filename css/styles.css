@@ -110,12 +110,11 @@
   .rating{display:flex;align-items:center;gap:5px;margin:9px 0 2px;font-size:12.5px;color:var(--muted)}
   .stars{color:var(--gold);letter-spacing:1px}
 
-  .sizes{display:flex;gap:6px;margin:12px 0 13px}
-  .size{flex:1;text-align:center;font-size:12.5px;color:var(--muted);background:var(--bg);border:1px solid var(--line-2);border-radius:8px;padding:7px 0 6px;cursor:pointer;transition:all .14s;font-weight:500}
+  .sizes{display:flex;gap:6px;margin:12px 0 6px}
+  .size{flex:1;text-align:center;font-size:12.5px;color:var(--muted);background:var(--bg);border:1px solid var(--line-2);border-radius:8px;padding:8px 0;cursor:pointer;transition:all .14s;font-weight:500}
   .size:hover{border-color:var(--faint);color:var(--ink)}
   .size.active{background:var(--accent-soft);border-color:var(--accent);color:var(--accent);font-weight:700}
-  .size .spray{display:block;font-size:9.5px;color:var(--faint);font-weight:500;margin-top:1px}
-  .size.active .spray{color:var(--accent)}
+  .spray-info{font-size:11px;color:var(--faint);margin-bottom:7px}
 
   .buyrow{display:flex;align-items:center;justify-content:space-between;margin-top:auto;gap:10px}
   .price{font-size:21px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
