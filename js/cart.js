@@ -179,10 +179,8 @@ const Cart = (() => {
     return `<div class="promo-track"><div class="promo-track-fill" style="width:${pct}%"></div>${dots}</div>`;
   }
 
-  function renderPromoProgress() {
-    const container = document.getElementById("promoProgress");
-    if (!container) return;
-    container.innerHTML = Object.keys(Promotions.PROMO_RULES).map((size) => {
+  function promoProgressHtml() {
+    return Object.keys(Promotions.PROMO_RULES).map((size) => {
       const count = countForSize(size);
       if (!count) return "";
       const message = buildPromoMessage(size, count);
@@ -212,7 +210,7 @@ const Cart = (() => {
     if (!lines.length) {
       itemsEl.innerHTML = '<div class="cart-empty">Koszyk jest pusty.</div>';
     } else {
-      itemsEl.innerHTML = lines.map((line, i) => {
+      itemsEl.innerHTML = promoProgressHtml() + lines.map((line, i) => {
         const product = findProduct(line.id);
         const linePrice = priceOf(line) * line.qty;
         return `
@@ -232,8 +230,6 @@ const Cart = (() => {
           </div>`;
       }).join("");
     }
-
-    renderPromoProgress();
 
     const promo = Promotions.computePromo(getItems());
     const shippingCost = promo.freeShipping ? 0 : SHIPPING_PRICE;
