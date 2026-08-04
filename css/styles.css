@@ -149,7 +149,7 @@
   .foot-bottom a:hover{color:var(--accent)}
 
   .toast{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.92);background:var(--surface);color:var(--ink);padding:26px 26px 22px;border-radius:18px;box-shadow:0 24px 60px rgba(0,0,0,.26);opacity:0;pointer-events:none;transition:opacity .25s,transform .25s cubic-bezier(.34,1.56,.64,1);z-index:170;display:flex;flex-direction:column;align-items:center;text-align:center;gap:2px;width:min(300px,86vw)}
-  .toast.show{opacity:1;transform:translate(-50%,-50%) scale(1)}
+  .toast.show{opacity:1;transform:translate(-50%,-50%) scale(1);pointer-events:auto}
   .toast-icon{width:46px;height:46px;border-radius:50%;background:#E3F3EA;color:var(--ok);display:flex;align-items:center;justify-content:center;margin-bottom:10px;flex:none}
   .toast-title{font-weight:700;font-size:15.5px}
   .toast-promo{width:100%;margin-top:12px}
