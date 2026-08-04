@@ -196,6 +196,15 @@ const Cart = (() => {
   }
 
   function render() {
+    // Self-heal: drop any cart lines whose product no longer exists in the
+    // catalog (e.g. removed in Supabase) so a single bad reference can't
+    // crash the rest of the render (badge/list/total all read `lines`).
+    const validLines = lines.filter((l) => findProduct(l.id));
+    if (validLines.length !== lines.length) {
+      lines = validLines;
+      save();
+    }
+
     const badge = document.getElementById("badge");
     const count = getCount();
     badge.textContent = count;
@@ -286,7 +295,10 @@ const Cart = (() => {
   }
 
   document.addEventListener("DOMContentLoaded", () => {
-    render();
+    // Cart lines reference products by id, so don't render until the
+    // Supabase-backed catalog has actually loaded (see render()'s
+    // self-heal above for what happens if that's skipped).
+    productsReady.then(render);
 
     document.getElementById("cartItems").addEventListener("click", (e) => {
       const qtyBtn = e.target.closest(".qty-btn");
