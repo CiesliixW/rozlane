@@ -51,12 +51,14 @@ const Cart = (() => {
     return lines.filter((l) => l.size === size).reduce((s, l) => s + l.qty, 0);
   }
 
-  function buildPromoMessage(size, count) {
+  function buildPromoMessage(size, count, celebrationPrefix) {
     const status = Promotions.getSizeStatus(size, count);
     if (!status) return null;
     const parts = [];
 
-    if (status.freeShippingMet) {
+    if (celebrationPrefix) {
+      parts.push(celebrationPrefix);
+    } else if (status.freeShippingMet) {
       parts.push("Masz darmową wysyłkę!");
     } else {
       parts.push(`Dodaj jeszcze ${status.freeShippingRemaining} (${size}) i miej darmową wysyłkę!`);
@@ -65,7 +67,7 @@ const Cart = (() => {
     if (status.nextFreeTier) {
       const noun = status.nextFreeTier.count === 1 ? "odlewkę" : "odlewki";
       parts.push(`Dodaj jeszcze ${status.nextFreeTier.remaining} i zyskaj ${noun} gratis!`);
-    } else if (status.currentFreeCount > 0) {
+    } else if (!celebrationPrefix && status.currentFreeCount > 0) {
       const noun = status.currentFreeCount === 1 ? "1 odlewka" : `${status.currentFreeCount} odlewki`;
       parts.push(`${noun} gratis!`);
     }
@@ -111,8 +113,8 @@ const Cart = (() => {
 
     let promoHtml = "";
     if (afterStatus) {
-      const message = unlockMessage || buildPromoMessage(size, count);
-      promoHtml = `<div class="toast-promo-msg">${message}</div>${buildPromoBar(size, count)}`;
+      const message = buildPromoMessage(size, count, unlockMessage);
+      promoHtml = `<div class="toast-promo-msg">${message}</div>${buildPromoBar(size, count)}<a class="toast-promo-link" href="zasady-promocji.html">Zobacz zasady promocji</a>`;
     }
     showToast(promoHtml, !!unlockMessage);
   }

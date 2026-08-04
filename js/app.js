@@ -95,8 +95,6 @@ document.querySelectorAll("[data-filter]").forEach((el) => {
   if (el.classList.contains("chip")) return;
   el.addEventListener("click", () => setFilter(el.dataset.filter));
 });
-document.getElementById("heroCta").addEventListener("click", () => setFilter("best"));
-
 document.getElementById("search").addEventListener("input", applyFilters);
 
 grid.innerHTML = '<div class="empty">Ładowanie katalogu…</div>';

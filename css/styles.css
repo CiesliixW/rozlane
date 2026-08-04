@@ -35,8 +35,11 @@
   .cookie-banner-actions button:hover{border-color:#fff}
 
   /* announcement bar */
-  .promo{background:var(--ink);color:#fff;text-align:center;font-size:13px;padding:9px 20px;letter-spacing:.01em}
-  .promo b{color:#F2C98A;font-weight:600}
+  .promo{background:var(--ink);color:#fff;overflow:hidden;white-space:nowrap;padding:10px 0}
+  .promo-ticker{display:inline-flex;gap:56px;padding-left:56px;animation:promoScroll 28s linear infinite}
+  .promo-ticker span{font-size:13px;font-weight:500;letter-spacing:.01em}
+  @keyframes promoScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  @media (prefers-reduced-motion:reduce){.promo-ticker{animation:none;padding-left:20px}}
 
   /* nav */
   .nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:15px 40px;display:flex;align-items:center;gap:26px}
@@ -153,6 +156,8 @@
   .toast-promo:empty{display:none;margin-top:0}
   .toast-promo-msg{font-size:12.5px;font-weight:600;color:var(--accent);line-height:1.4}
   .toast .promo-track{margin:14px 2px 4px}
+  .toast-promo-link{display:inline-block;margin-top:6px;font-size:11.5px;font-weight:600;color:var(--muted);text-decoration:underline;text-underline-offset:2px}
+  .toast-promo-link:hover{color:var(--accent)}
   .toast.celebrate{animation:toastPop .5s cubic-bezier(.34,1.56,.64,1)}
   .toast.celebrate .toast-icon{background:var(--accent-soft);color:var(--accent)}
   @keyframes toastPop{0%{transform:translate(-50%,-50%) scale(1)}35%{transform:translate(-50%,-50%) scale(1.06)}100%{transform:translate(-50%,-50%) scale(1)}}
