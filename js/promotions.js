@@ -1,7 +1,6 @@
 const _deps = (typeof module !== "undefined" && module.exports) ? require("./products.js") : null;
 const _SIZES = _deps ? _deps.SIZES : SIZES;
 const _PRICE_TABLE = _deps ? _deps.PRICE_TABLE : PRICE_TABLE;
-const _PRODUCTS = _deps ? _deps.PRODUCTS : PRODUCTS;
 
 // "Nie łączymy 5 z 2" — each size below has its own independent set of tiers.
 const PROMO_RULES = {
@@ -16,11 +15,11 @@ function spraysForSize(size) {
   return Math.round(ml * SPRAYS_PER_ML);
 }
 
-function unitPricesForSize(items, size) {
+function unitPricesForSize(items, size, products) {
   const prices = [];
   for (const item of items) {
     if (item.size !== size) continue;
-    const product = _PRODUCTS.find((p) => p.id === item.id);
+    const product = products.find((p) => p.id === item.id);
     if (!product) continue;
     const sizeIndex = _SIZES.indexOf(size);
     const price = _PRICE_TABLE[product.t][sizeIndex];
@@ -38,14 +37,17 @@ function freeItemCountFor(rule, count) {
 }
 
 // items: [{ id, size, qty }] — same shape as the cart lines / validated checkout items.
-function computePromo(items) {
+// products: optional override of the product catalog to validate against (server-side,
+// where there's no ambient PRODUCTS global); defaults to the browser's PRODUCTS.
+function computePromo(items, products) {
+  const list = products || (typeof PRODUCTS !== "undefined" ? PRODUCTS : []);
   let freeShipping = false;
   let discount = 0;
   const bySize = {};
 
   for (const size of Object.keys(PROMO_RULES)) {
     const rule = PROMO_RULES[size];
-    const unitPrices = unitPricesForSize(items, size).sort((a, b) => a - b);
+    const unitPrices = unitPricesForSize(items, size, list).sort((a, b) => a - b);
     const count = unitPrices.length;
     const sizeFreeShipping = count >= rule.freeShippingAt;
     const freeCount = freeItemCountFor(rule, count);

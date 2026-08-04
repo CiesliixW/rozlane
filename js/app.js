@@ -99,7 +99,8 @@ document.getElementById("heroCta").addEventListener("click", () => setFilter("be
 
 document.getElementById("search").addEventListener("input", applyFilters);
 
-render(PRODUCTS);
+grid.innerHTML = '<div class="empty">Ładowanie katalogu…</div>';
+productsReady.then(() => render(PRODUCTS));
 
 // Minimal WAI-ARIA dialog behavior shared by every overlay+panel modal on
 // the page (cart drawer, point picker, order confirmation): traps Tab

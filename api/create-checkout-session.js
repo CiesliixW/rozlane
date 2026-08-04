@@ -1,6 +1,7 @@
 const Stripe = require("stripe");
-const { PRODUCTS, PRICE_TABLE, SIZES } = require("../js/products.js");
+const { PRICE_TABLE, SIZES } = require("../js/products.js");
 const Promotions = require("../js/promotions.js");
+const { fetchProducts } = require("./_products.js");
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -29,10 +30,17 @@ module.exports = async function handler(req, res) {
     return res.status(400).json({ error: "Missing InPost parcel locker selection" });
   }
 
+  let products;
+  try {
+    products = await fetchProducts();
+  } catch (err) {
+    return res.status(500).json({ error: "Nie udało się pobrać katalogu produktów" });
+  }
+
   const validatedItems = [];
   const line_items = [];
   for (const item of items) {
-    const product = PRODUCTS.find((p) => p.id === item.id);
+    const product = products.find((p) => p.id === item.id);
     const sizeIndex = SIZES.indexOf(item.size);
     const qty = Number(item.qty);
     if (!product || sizeIndex === -1 || !Number.isInteger(qty) || qty < 1 || qty > 20) {
@@ -50,7 +58,7 @@ module.exports = async function handler(req, res) {
     });
   }
 
-  const promo = Promotions.computePromo(validatedItems);
+  const promo = Promotions.computePromo(validatedItems, products);
   const shippingAmount = promo.freeShipping ? 0 : Math.round(SHIPPING_PRICE * 100);
 
   const baseUrl = origin || `https://${req.headers.host}`;

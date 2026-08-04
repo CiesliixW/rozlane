@@ -7,17 +7,9 @@ const PRICE_TABLE = {
   ultra: [49.99, 109.00, 199.00, 549.00],
 };
 
-const PRODUCTS = [
-  { id: "sauvage", h: "Dior", n: "Sauvage Parfum", no: "bergamotka · sandałowiec · tonka", t: "designer", g: ["meskie"], best: 1, img: "images/sauvage.webp", r: 4.9, c: 412 },
-  { id: "eros", h: "Versace", n: "Eros Parfum", no: "mięta · tonka · wanilia", t: "designer", g: ["meskie"], best: 1, img: "images/eros.webp", r: 4.8, c: 307 },
-  { id: "million", h: "Paco Rabanne", n: "1 Million Parfum", no: "skóra · kardamon · miód", t: "designer", g: ["meskie"], best: 1, img: "images/million.webp", r: 4.7, c: 288 },
-  { id: "invictus", h: "Paco Rabanne", n: "Invictus Parfum", no: "grejpfrut · morska nuta · drewno", t: "designer", g: ["meskie"], best: 0, img: "images/invictus.webp", r: 4.6, c: 154 },
-  { id: "swy", h: "Emporio Armani", n: "Stronger With You Absolutely", no: "kawa · tytoń · wanilia", t: "designer", g: ["meskie"], best: 1, img: "images/swy.webp", r: 4.8, c: 263 },
-  { id: "ombre", h: "Tom Ford", n: "Ombré Leather", no: "skóra · szafran · jaśmin", t: "nisza", g: ["unisex"], best: 1, img: "images/ombre.webp", r: 4.9, c: 198 },
-  { id: "roma_extra", h: "Valentino", n: "Uomo Born in Roma Extradose", no: "pieprz · wetiwer · tonka", t: "premium", g: ["meskie"], best: 0, img: "images/roma_extra.webp", r: 4.7, c: 141 },
-  { id: "roma_intense", h: "Valentino", n: "Uomo Born in Roma Intense", no: "jałowiec · kakao · skóra", t: "designer", g: ["meskie"], best: 0, img: "images/roma_intense.webp", r: 4.6, c: 132 },
-];
-
+// The product catalog itself lives in Supabase now:
+// - browser: js/product-catalog.js fetches it into the PRODUCTS global
+// - server (api/*.js): fetched fresh per-request, see api/_products.js
 if (typeof module !== "undefined" && module.exports) {
-  module.exports = { SIZES, PRICE_TABLE, PRODUCTS };
+  module.exports = { SIZES, PRICE_TABLE };
 }
