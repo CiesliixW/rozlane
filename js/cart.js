@@ -73,14 +73,14 @@ const Cart = (() => {
     return parts.join(" ");
   }
 
-  function showToast(message, celebrate) {
+  function showToast(promoHtml, celebrate) {
     const toast = document.getElementById("toast");
-    const toastText = document.getElementById("toastText");
-    toastText.textContent = message;
+    const promoEl = document.getElementById("toastPromo");
+    promoEl.innerHTML = promoHtml || "";
     toast.classList.toggle("celebrate", !!celebrate);
     toast.classList.add("show");
     clearTimeout(showToast._t);
-    showToast._t = setTimeout(() => toast.classList.remove("show", "celebrate"), celebrate || message.length > 30 ? 4200 : 1400);
+    showToast._t = setTimeout(() => toast.classList.remove("show", "celebrate"), promoHtml ? 4200 : 2000);
   }
 
   function buildUnlockMessage(size, before, after) {
@@ -90,7 +90,7 @@ const Cart = (() => {
     const newFree = after.currentFreeCount - before.currentFreeCount;
     if (newFree > 0) gains.push(newFree === 1 ? "odlewkę gratis" : `${newFree} odlewki gratis`);
     if (!gains.length) return null;
-    return `🎉 Odblokowano: ${gains.join(" + ")}! (${size})`;
+    return `🎉 Odblokowano: ${gains.join(" + ")}!`;
   }
 
   function addItem(id, size, qty = 1) {
@@ -105,13 +105,16 @@ const Cart = (() => {
     save();
     render();
 
-    const afterStatus = Promotions.getSizeStatus(size, countForSize(size));
+    const count = countForSize(size);
+    const afterStatus = Promotions.getSizeStatus(size, count);
     const unlockMessage = buildUnlockMessage(size, beforeStatus, afterStatus);
-    if (unlockMessage) {
-      showToast(unlockMessage, true);
-    } else {
-      showToast(buildPromoMessage(size, countForSize(size)) || "Dodano do koszyka");
+
+    let promoHtml = "";
+    if (afterStatus) {
+      const message = unlockMessage || buildPromoMessage(size, count);
+      promoHtml = `<div class="toast-promo-msg">${message}</div>${buildPromoBar(size, count)}`;
     }
+    showToast(promoHtml, !!unlockMessage);
   }
 
   function setQty(index, qty) {
