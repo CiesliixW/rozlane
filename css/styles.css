@@ -253,6 +253,14 @@
     .filterbar{top:60px}
   }
   @media (max-width:560px){
+    .nav{padding:12px 14px;gap:8px}
+    .brand{font-size:20px}
+    .nav-tools{gap:6px}
+    .nav-tools .icon-btn:not(#cart){display:none}
+    .searchbox{padding:8px 10px;gap:5px}
+    .searchbox input{width:64px;font-size:13px}
+    .icon-btn{padding:8px}
+
     .hero-banner{margin:12px 12px 0;border-radius:16px;min-height:auto}
     .hero-banner .content{padding:26px 20px 28px}
     .hero-banner .eyebrow{font-size:10.5px;padding:6px 12px;margin-bottom:14px}
@@ -262,10 +270,13 @@
     .hero-badges{gap:10px 16px;margin-top:16px}
     .hero-badges div{font-size:11.5px}
 
-    .valuebar{padding-left:12px;padding-right:12px;margin-top:14px}
-    .valuebar-inner{grid-template-columns:1fr;border-radius:14px}
-    .vb{justify-content:flex-start;padding:15px 18px}
+    .valuebar{padding-left:0;padding-right:0;margin-top:16px}
+    .valuebar-inner{display:flex;background:none;border:none;border-radius:0;overflow-x:auto;scroll-snap-type:x mandatory;gap:10px;padding:0 18px 6px;scrollbar-width:none}
+    .valuebar-inner::-webkit-scrollbar{display:none}
+    .vb{flex:0 0 auto;width:150px;scroll-snap-align:start;flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px}
     .vb::after{display:none}
-    .vb:not(:last-child){border-bottom:1px solid var(--line)}
+    .vb .ic{width:36px;height:36px}
+    .vb .txt b{font-size:13.5px}
+    .vb .txt span{font-size:11.5px}
   }
   @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
