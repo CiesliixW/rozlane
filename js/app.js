@@ -193,7 +193,6 @@ function closePointPicker() {
   closeModal(pointPicker, pointOverlay);
 }
 
-document.getElementById("pickPointBtn").addEventListener("click", openPointPicker);
 pointOverlay.addEventListener("click", closePointPicker);
 document.getElementById("pointClose").addEventListener("click", closePointPicker);
 pointPicker.addEventListener("modal:close", closePointPicker);
@@ -207,4 +206,5 @@ window.onInpostPointSelected = function (point) {
   const address = point.address ? [point.address.line1, point.address.line2].filter(Boolean).join(", ") : "";
   Cart.setDeliveryPoint({ code: point.name, address });
   closePointPicker();
+  Cart.checkout();
 };

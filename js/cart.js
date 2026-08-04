@@ -203,7 +203,6 @@ const Cart = (() => {
     const totalEl = document.getElementById("cartTotal");
     const shippingRow = document.getElementById("cartShippingRow");
     const discountRow = document.getElementById("cartDiscountRow");
-    const pointEl = document.getElementById("deliveryPointStatus");
     const checkoutBtn = document.getElementById("cartCheckout");
     if (!itemsEl) return;
 
@@ -251,14 +250,6 @@ const Cart = (() => {
 
     const total = getSubtotal() - promo.discount + (lines.length ? shippingCost : 0);
     totalEl.textContent = fmt(total);
-
-    if (deliveryPoint) {
-      pointEl.innerHTML = `<b>Paczkomat ${deliveryPoint.code}</b><span>${deliveryPoint.address || ""}</span>`;
-      pointEl.classList.add("set");
-    } else {
-      pointEl.innerHTML = "Nie wybrano paczkomatu";
-      pointEl.classList.remove("set");
-    }
 
     checkoutBtn.disabled = !lines.length;
   }
@@ -309,5 +300,5 @@ const Cart = (() => {
     document.getElementById("cartCheckout").addEventListener("click", checkout);
   });
 
-  return { addItem, getCount, getDeliveryPoint, setDeliveryPoint, clear, render };
+  return { addItem, getCount, getDeliveryPoint, setDeliveryPoint, checkout, clear, render };
 })();
