@@ -207,10 +207,13 @@ const Cart = (() => {
     const checkoutBtn = document.getElementById("cartCheckout");
     if (!itemsEl) return;
 
+    const promoEl = document.getElementById("promoProgress");
+    if (promoEl) promoEl.innerHTML = promoProgressHtml();
+
     if (!lines.length) {
       itemsEl.innerHTML = '<div class="cart-empty">Koszyk jest pusty.</div>';
     } else {
-      itemsEl.innerHTML = promoProgressHtml() + lines.map((line, i) => {
+      itemsEl.innerHTML = lines.map((line, i) => {
         const product = findProduct(line.id);
         const linePrice = priceOf(line) * line.qty;
         return `
