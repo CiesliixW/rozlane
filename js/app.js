@@ -8,7 +8,7 @@ function stars(rating) {
 
 function media(product) {
   if (product.img) {
-    return `<div class="photowrap"><img src="${product.img}" alt="${product.h} ${product.n}" loading="lazy"></div>`;
+    return `<div class="photowrap"><img src="${escapeHtml(product.img)}" alt="${escapeHtml(product.h)} ${escapeHtml(product.n)}" loading="lazy"></div>`;
   }
   return `<div class="vialwrap"><div class="vial"><div class="cap"></div><div class="neck"></div><div class="body"><div class="fill" style="height:${product.fill || 70}%"></div></div><div class="shine"></div></div></div>`;
 }
@@ -21,9 +21,9 @@ function card(product) {
   el.innerHTML = `
     ${product.best ? '<span class="badge-best">Bestseller</span>' : ""}
     ${media(product)}
-    <div class="house">${product.h}</div>
-    <div class="pname">${product.n}</div>
-    <div class="notes">${product.no}</div>
+    <div class="house">${escapeHtml(product.h)}</div>
+    <div class="pname">${escapeHtml(product.n)}</div>
+    <div class="notes">${escapeHtml(product.no)}</div>
     <div class="rating"><span class="stars" aria-hidden="true">${stars(product.r)}</span> <span>${product.r.toFixed(1).replace(".", ",")} · ${product.c} opinii</span></div>
     <div class="sizes" role="group" aria-label="Pojemność">${SIZES.map((s, j) => `<button type="button" class="size${j === 0 ? " active" : ""}" data-i="${j}">${s}</button>`).join("")}</div>
     <div class="spray-info">~${Promotions.spraysForSize(SIZES[0])} psiknięć</div>

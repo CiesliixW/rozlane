@@ -49,15 +49,15 @@
         <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6 9 17l-5-5"/></svg>
       </div>
       <h3>Dziękujemy za zamówienie!</h3>
-      <p class="order-status">Numer zamówienia: <b class="order-id">${order.orderId}</b></p>
-      <p class="order-status">Status płatności: <b>${paid ? "opłacone" : order.status}</b></p>
+      <p class="order-status">Numer zamówienia: <b class="order-id">${escapeHtml(order.orderId)}</b></p>
+      <p class="order-status">Status płatności: <b>${paid ? "opłacone" : escapeHtml(order.status)}</b></p>
       <div class="order-lines">${order.lineItems.map((li) => `
-        <div class="order-line"><span>${li.quantity}× ${li.name}</span><span>${fmt(li.amountTotal / 100)}</span></div>`).join("")}
+        <div class="order-line"><span>${li.quantity}× ${escapeHtml(li.name)}</span><span>${fmt(li.amountTotal / 100)}</span></div>`).join("")}
       </div>
       <div class="order-total"><span>Razem</span><strong>${fmt(order.amountTotal / 100)}</strong></div>
-      ${order.inpostPoint ? `<div class="order-delivery">Odbiór: Paczkomat <b>${order.inpostPoint}</b></div>` : ""}
-      ${order.phone ? `<div class="order-delivery">Kontakt: <b>${order.phone}</b></div>` : ""}
-      ${order.email ? `<p class="order-note">Potwierdzenie zamówienia wysłaliśmy na adres ${order.email}.</p>` : ""}
+      ${order.inpostPoint ? `<div class="order-delivery">Odbiór: Paczkomat <b>${escapeHtml(order.inpostPoint)}</b></div>` : ""}
+      ${order.phone ? `<div class="order-delivery">Kontakt: <b>${escapeHtml(order.phone)}</b></div>` : ""}
+      ${order.email ? `<p class="order-note">Potwierdzenie zamówienia wysłaliśmy na adres ${escapeHtml(order.email)}.</p>` : ""}
       <button class="cart-checkout" id="orderContinue">Kontynuuj zakupy</button>`;
     wireContinue();
     if (paid) Cart.clear();

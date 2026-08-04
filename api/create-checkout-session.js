@@ -7,6 +7,19 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 const SHIPPING_PRICE = 16.99;
 
+// `origin` in the request body is client-supplied and must never be trusted
+// directly -- it feeds success_url/cancel_url, so an unvalidated value would
+// let anyone redirect a real, paid customer to an attacker's domain.
+const PRODUCTION_ORIGINS = ["https://rozlane.pl", "https://www.rozlane.pl"];
+const PREVIEW_ORIGIN_PATTERN = /^https:\/\/rozlane(-[a-z0-9-]+)?\.vercel\.app$/;
+
+function resolveBaseUrl(origin) {
+  if (typeof origin === "string" && (PRODUCTION_ORIGINS.includes(origin) || PREVIEW_ORIGIN_PATTERN.test(origin))) {
+    return origin;
+  }
+  return PRODUCTION_ORIGINS[0];
+}
+
 module.exports = async function handler(req, res) {
   if (req.method !== "POST") {
     res.setHeader("Allow", "POST");
@@ -61,7 +74,7 @@ module.exports = async function handler(req, res) {
   const promo = Promotions.computePromo(validatedItems, products);
   const shippingAmount = promo.freeShipping ? 0 : Math.round(SHIPPING_PRICE * 100);
 
-  const baseUrl = origin || `https://${req.headers.host}`;
+  const baseUrl = resolveBaseUrl(origin);
   const metadata = {
     inpost_point: deliveryPoint.code,
     inpost_address: (deliveryPoint.address || "").slice(0, 500),

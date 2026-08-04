@@ -1,5 +1,12 @@
 const fmt = (v) => v.toFixed(2).replace(".", ",") + " zł";
 
+// Defense in depth: product data and Stripe-returned customer fields go
+// through innerHTML in a few places, so escape before interpolating even
+// though writes to the product catalog are already blocked by RLS.
+const escapeHtml = (str) => String(str).replace(/[&<>"']/g, (c) => ({
+  "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+}[c]));
+
 const SHIPPING_PRICE = 16.99;
 
 const Cart = (() => {
@@ -228,9 +235,9 @@ const Cart = (() => {
         const linePrice = priceOf(line) * line.qty;
         return `
           <div class="cart-item">
-            <img src="${product.img}" alt="${product.h} ${product.n}">
+            <img src="${escapeHtml(product.img)}" alt="${escapeHtml(product.h)} ${escapeHtml(product.n)}">
             <div class="cart-item-info">
-              <div class="cart-item-name">${product.h} ${product.n}</div>
+              <div class="cart-item-name">${escapeHtml(product.h)} ${escapeHtml(product.n)}</div>
               <div class="cart-item-size">${line.size}</div>
               <div class="cart-item-qty">
                 <button class="qty-btn" data-i="${i}" data-d="-1">−</button>
