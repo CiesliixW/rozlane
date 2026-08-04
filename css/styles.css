@@ -236,7 +236,7 @@
   #orderModal .cart-checkout{margin-top:4px}
 
   @media (max-width:860px){
-    .hero-banner{min-height:540px}
+    .hero-banner{min-height:480px}
     .hero-banner .scrim{background:linear-gradient(180deg,rgba(8,8,11,.5) 0%,rgba(8,8,11,.9) 78%)}
     .hero-banner .content{padding:32px 26px;max-width:100%}
     .hero-banner .bg{object-position:74% 30%}
@@ -248,7 +248,24 @@
     .nav{padding:13px 18px;gap:12px}
     .nav-links{display:none}
     .searchbox input{width:100px}
-    .hero,.strip,.wrap,footer{padding-left:18px;padding-right:18px}
+    .wrap,footer,.valuebar{padding-left:18px;padding-right:18px}
+    .hero-banner{margin:16px 18px 0;border-radius:18px}
     .filterbar{top:60px}
+  }
+  @media (max-width:560px){
+    .hero-banner{margin:12px 12px 0;border-radius:16px;min-height:auto}
+    .hero-banner .content{padding:26px 20px 28px}
+    .hero-banner .eyebrow{font-size:10.5px;padding:6px 12px;margin-bottom:14px}
+    .hero-banner h1{font-size:clamp(28px,9vw,36px);line-height:1.1}
+    .hero-banner p{font-size:14px;line-height:1.55;margin:12px 0 20px;max-width:100%}
+    .hero-banner .cta{width:100%;justify-content:center}
+    .hero-badges{gap:10px 16px;margin-top:16px}
+    .hero-badges div{font-size:11.5px}
+
+    .valuebar{padding-left:12px;padding-right:12px;margin-top:14px}
+    .valuebar-inner{grid-template-columns:1fr;border-radius:14px}
+    .vb{justify-content:flex-start;padding:15px 18px}
+    .vb::after{display:none}
+    .vb:not(:last-child){border-bottom:1px solid var(--line)}
   }
   @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
