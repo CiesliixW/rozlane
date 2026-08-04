@@ -19,24 +19,23 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
-<link rel="stylesheet" href="https://geowidget.inpost.pl/inpost-geowidget.css">
-<script src="https://geowidget.inpost.pl/inpost-geowidget.js" defer></script>
 </head>
 <body>
+
+<a class="skip-link" href="#main">Przejdź do treści</a>
 
 <div class="promo">Darmowa wysyłka od <b>99 zł</b> · zestaw 3 próbek gratis do pierwszego zamówienia</div>
 
 <nav class="nav">
   <div class="brand">rozlane<span class="dot">.</span>pl</div>
   <div class="nav-links">
-    <a href="#">Bestsellery</a><a href="#">Męskie</a><a href="#">Damskie</a><a href="#">Unisex</a><a href="#">Nisza</a><a href="#">Zestawy</a>
+    <a href="#grid" data-filter="best">Bestsellery</a><a href="#grid" data-filter="meskie">Męskie</a><a href="#grid" data-filter="damskie">Damskie</a><a href="#grid" data-filter="unisex">Unisex</a><a href="#grid" data-filter="nisza">Nisza</a>
   </div>
   <div class="nav-tools">
     <label class="searchbox">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-      <input id="search" type="text" placeholder="Szukaj perfum…" autocomplete="off">
+      <input id="search" type="text" placeholder="Szukaj perfum…" aria-label="Szukaj perfum" autocomplete="off">
     </label>
-    <div class="icon-btn"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></div>
     <div class="icon-btn" id="cart">
       <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>
       <span class="badge" id="badge">0</span>
@@ -51,7 +50,7 @@
     <span class="eyebrow">Perfumy męskie · bestsellery</span>
     <h1>Drogie perfumy.<br>Na mililitry.</h1>
     <p>Sauvage, Eros, Ombré Leather i reszta — oryginały odlewane na mililitry. Sprawdź zapach, zanim wydasz na cały flakon.</p>
-    <button class="cta">Zobacz bestsellery
+    <button class="cta" id="heroCta">Zobacz bestsellery
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
     </button>
     <div class="hero-badges">
@@ -70,10 +69,10 @@
   </div>
 </div>
 
-<main class="wrap">
+<main class="wrap" id="main">
   <div class="sec-head">
     <div><h2 id="grid-title">Bestsellery</h2><p id="grid-sub">Najczęściej zamawiane odlewki w tym miesiącu</p></div>
-    <a class="link" href="#">Zobacz wszystkie →</a>
+    <a class="link" href="#grid" data-filter="all">Zobacz wszystkie →</a>
   </div>
   <div class="filterbar"><div class="inner">
     <button class="chip active" data-filter="all">Wszystkie</button>
@@ -93,9 +92,9 @@
       <div class="brand">rozlane<span class="dot">.</span>pl</div>
       <p>Odlewki oryginalnych perfum. Każdy mililitr odmierzamy na wadze, przelewamy do szklanego atomizera i wysyłamy z Warszawy w 24 h.</p>
     </div>
-    <div class="foot-col"><h4>Sklep</h4><a href="#">Bestsellery</a><a href="#">Nowości</a><a href="#">Zestawy testowe</a><a href="#">Karta podarunkowa</a></div>
-    <div class="foot-col"><h4>Pomoc</h4><a href="#">Jak działają odlewki</a><a href="zwroty.html">Wysyłka i zwroty</a><a href="#">Autentyczność</a><a href="mailto:kontakt@rozlane.pl">Kontakt</a></div>
-    <div class="foot-col"><h4>Obserwuj</h4><a href="#">Instagram</a><a href="#">TikTok</a><a href="#">YouTube</a></div>
+    <div class="foot-col"><h4>Sklep</h4><a href="#grid" data-filter="best">Bestsellery</a></div>
+    <div class="foot-col"><h4>Pomoc</h4><a href="jak-dzialaja-odlewki.html">Jak działają odlewki</a><a href="zwroty.html">Wysyłka i zwroty</a><a href="autentycznosc.html">Autentyczność</a><a href="mailto:kontakt@rozlane.pl">Kontakt</a></div>
+    <div class="foot-col"><h4>Obserwuj</h4><a href="https://www.instagram.com/rozlane_pl" target="_blank" rel="noopener">Instagram</a></div>
   </div>
   <div class="foot-bottom"><span>© 2026 rozlane.pl · wszystkie znaki towarowe należą do ich właścicieli</span><span><a href="regulamin.html">Regulamin</a> · <a href="regulamin.html#dane-osobowe">Prywatność</a> · <a href="zwroty.html">Zwroty</a></span></div>
 </footer>
@@ -108,10 +107,10 @@
   <div class="toast-promo" id="toastPromo"></div>
 </div>
 
-<div class="cart-overlay" id="cartOverlay"></div>
-<aside class="cart-drawer" id="cartDrawer">
+<div class="cart-overlay" id="cartOverlay" aria-hidden="true"></div>
+<aside class="cart-drawer" id="cartDrawer" role="dialog" aria-modal="true" aria-labelledby="cartDrawerTitle" tabindex="-1">
   <div class="cart-drawer-head">
-    <h3>Koszyk</h3>
+    <h3 id="cartDrawerTitle">Koszyk</h3>
     <button class="cart-close" id="cartClose" aria-label="Zamknij">✕</button>
   </div>
   <div class="cart-items" id="cartItems"></div>
@@ -127,10 +126,10 @@
   </div>
 </aside>
 
-<div class="point-overlay" id="pointOverlay"></div>
-<div class="point-picker" id="pointPicker">
+<div class="point-overlay" id="pointOverlay" aria-hidden="true"></div>
+<div class="point-picker" id="pointPicker" role="dialog" aria-modal="true" aria-labelledby="pointPickerTitle" tabindex="-1">
   <div class="point-picker-head">
-    <h3>Wybierz paczkomat</h3>
+    <h3 id="pointPickerTitle">Wybierz paczkomat</h3>
     <button class="cart-close" id="pointClose" aria-label="Zamknij">✕</button>
   </div>
   <div class="point-picker-body">
@@ -143,8 +142,8 @@
   </div>
 </div>
 
-<div class="order-overlay" id="orderOverlay"></div>
-<div class="order-modal" id="orderModal">
+<div class="order-overlay" id="orderOverlay" aria-hidden="true"></div>
+<div class="order-modal" id="orderModal" role="dialog" aria-modal="true" aria-label="Podsumowanie zamówienia" tabindex="-1">
   <button class="cart-close" id="orderClose" aria-label="Zamknij">✕</button>
   <div id="orderModalBody"></div>
 </div>
@@ -154,5 +153,13 @@
 <script src="js/cart.js" defer></script>
 <script src="js/app.js" defer></script>
 <script src="js/order-status.js" defer></script>
+<div class="cookie-banner" id="cookieBanner" role="region" aria-label="Zgoda na pliki cookie">
+  <p>Używamy technologii niezbędnych do działania koszyka. Widget mapy Paczkomatów InPost ładujemy wyłącznie na Twoje żądanie, po kliknięciu „Wybierz paczkomat”. Nie używamy cookies reklamowych ani śledzących. Szczegóły w <a href="regulamin.html#cookies">Polityce cookies</a>.</p>
+  <div class="cookie-banner-actions">
+    <button type="button" id="cookieNecessary">Tylko niezbędne</button>
+    <button type="button" id="cookieAcceptAll" class="primary">Akceptuj wszystkie</button>
+  </div>
+</div>
+<script src="js/cookie-consent.js" defer></script>
 </body>
 </html>

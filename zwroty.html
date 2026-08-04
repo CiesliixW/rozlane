@@ -10,6 +10,8 @@
 </head>
 <body>
 
+<a class="skip-link" href="#main">Przejdź do treści</a>
+
 <nav class="nav">
   <a class="brand" href="index.html">rozlane<span class="dot">.</span>pl</a>
   <div class="nav-tools" style="margin-left:auto">
@@ -17,7 +19,7 @@
   </div>
 </nav>
 
-<main class="wrap legal">
+<main class="wrap legal" id="main">
   <h1>Polityka zwrotów i reklamacji</h1>
   <p class="legal-updated">Obowiązuje od: 02.08.2026</p>
 
@@ -71,5 +73,13 @@
   </div>
 </footer>
 
+<div class="cookie-banner" id="cookieBanner" role="region" aria-label="Zgoda na pliki cookie">
+  <p>Używamy technologii niezbędnych do działania koszyka. Widget mapy Paczkomatów InPost ładujemy wyłącznie na Twoje żądanie, po kliknięciu „Wybierz paczkomat”. Nie używamy cookies reklamowych ani śledzących. Szczegóły w <a href="regulamin.html#cookies">Polityce cookies</a>.</p>
+  <div class="cookie-banner-actions">
+    <button type="button" id="cookieNecessary">Tylko niezbędne</button>
+    <button type="button" id="cookieAcceptAll" class="primary">Akceptuj wszystkie</button>
+  </div>
+</div>
+<script src="js/cookie-consent.js" defer></script>
 </body>
 </html>

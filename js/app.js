@@ -20,13 +20,12 @@ function card(product) {
   el.className = "card";
   el.innerHTML = `
     ${product.best ? '<span class="badge-best">Bestseller</span>' : ""}
-    <button class="fav" aria-label="Ulubione"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></button>
     ${media(product)}
     <div class="house">${product.h}</div>
     <div class="pname">${product.n}</div>
     <div class="notes">${product.no}</div>
-    <div class="rating"><span class="stars">${stars(product.r)}</span> ${product.r.toFixed(1).replace(".", ",")} · ${product.c} opinii</div>
-    <div class="sizes">${SIZES.map((s, j) => `<div class="size${j === 0 ? " active" : ""}" data-i="${j}">${s}</div>`).join("")}</div>
+    <div class="rating"><span class="stars" aria-hidden="true">${stars(product.r)}</span> <span>${product.r.toFixed(1).replace(".", ",")} · ${product.c} opinii</span></div>
+    <div class="sizes" role="group" aria-label="Pojemność">${SIZES.map((s, j) => `<button type="button" class="size${j === 0 ? " active" : ""}" data-i="${j}">${s}</button>`).join("")}</div>
     <div class="spray-info">~${Promotions.spraysForSize(SIZES[0])} psiknięć</div>
     <div class="buyrow">
       <div class="price">${fmt(prices[0])}<small>za 2 ml</small></div>
@@ -46,7 +45,6 @@ function card(product) {
   }));
 
   el.querySelector(".add").addEventListener("click", () => Cart.addItem(product.id, selectedSize));
-  el.querySelector(".fav").addEventListener("click", (e) => e.currentTarget.classList.toggle("active"));
 
   return el;
 }
@@ -83,52 +81,122 @@ function applyFilters() {
   render(list);
 }
 
-document.querySelectorAll(".chip").forEach((chip) => chip.addEventListener("click", () => {
-  document.querySelectorAll(".chip").forEach((x) => x.classList.remove("active"));
-  chip.classList.add("active");
-  currentFilter = chip.dataset.filter;
-  const [title, subtitle] = FILTER_LABELS[currentFilter];
+function setFilter(filterKey) {
+  currentFilter = filterKey;
+  document.querySelectorAll(".chip").forEach((x) => x.classList.toggle("active", x.dataset.filter === filterKey));
+  const [title, subtitle] = FILTER_LABELS[filterKey];
   document.getElementById("grid-title").textContent = title;
   document.getElementById("grid-sub").textContent = subtitle;
   applyFilters();
-}));
+}
+
+document.querySelectorAll(".chip").forEach((chip) => chip.addEventListener("click", () => setFilter(chip.dataset.filter)));
+document.querySelectorAll("[data-filter]").forEach((el) => {
+  if (el.classList.contains("chip")) return;
+  el.addEventListener("click", () => setFilter(el.dataset.filter));
+});
+document.getElementById("heroCta").addEventListener("click", () => setFilter("best"));
 
 document.getElementById("search").addEventListener("input", applyFilters);
 
 render(PRODUCTS);
+
+// Minimal WAI-ARIA dialog behavior shared by every overlay+panel modal on
+// the page (cart drawer, point picker, order confirmation): traps Tab
+// inside the topmost open panel, closes the topmost one on Escape, and
+// returns focus to whatever triggered it.
+const openModals = [];
+
+function openModal(panel, overlay) {
+  panel.classList.add("open");
+  if (overlay) overlay.classList.add("open");
+  const trigger = document.activeElement;
+  openModals.push({ panel, trigger });
+  const focusTarget = panel.querySelector("button, [href], input, select, textarea, [tabindex]") || panel;
+  requestAnimationFrame(() => focusTarget.focus({ preventScroll: true }));
+}
+
+function closeModal(panel, overlay) {
+  panel.classList.remove("open");
+  if (overlay) overlay.classList.remove("open");
+  const idx = openModals.findIndex((m) => m.panel === panel);
+  if (idx === -1) return;
+  const [entry] = openModals.splice(idx, 1);
+  if (entry.trigger && document.body.contains(entry.trigger)) entry.trigger.focus({ preventScroll: true });
+}
+
+document.addEventListener("keydown", (e) => {
+  if (!openModals.length) return;
+  const panel = openModals[openModals.length - 1].panel;
+  if (e.key === "Escape") {
+    panel.dispatchEvent(new CustomEvent("modal:close"));
+  } else if (e.key === "Tab") {
+    const focusable = Array.from(panel.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), select, textarea, [tabindex]:not([tabindex="-1"])')).filter((el) => el.offsetParent !== null);
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  }
+});
 
 const cartIcon = document.getElementById("cart");
 const cartDrawer = document.getElementById("cartDrawer");
 const cartOverlay = document.getElementById("cartOverlay");
 
 function openCart() {
-  cartDrawer.classList.add("open");
-  cartOverlay.classList.add("open");
+  openModal(cartDrawer, cartOverlay);
 }
 function closeCart() {
-  cartDrawer.classList.remove("open");
-  cartOverlay.classList.remove("open");
+  closeModal(cartDrawer, cartOverlay);
 }
 
 cartIcon.addEventListener("click", openCart);
 cartOverlay.addEventListener("click", closeCart);
 document.getElementById("cartClose").addEventListener("click", closeCart);
+cartDrawer.addEventListener("modal:close", closeCart);
 
 const pointPicker = document.getElementById("pointPicker");
 const pointOverlay = document.getElementById("pointOverlay");
 
+// The InPost widget is a third-party embed that only matters once someone
+// actually asks to pick a parcel locker, so it's fetched on demand instead
+// of on every page load.
+let inpostWidgetPromise = null;
+function loadInpostWidget() {
+  if (!inpostWidgetPromise) {
+    inpostWidgetPromise = new Promise((resolve) => {
+      const link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.href = "https://geowidget.inpost.pl/inpost-geowidget.css";
+      document.head.appendChild(link);
+
+      const script = document.createElement("script");
+      script.src = "https://geowidget.inpost.pl/inpost-geowidget.js";
+      script.onload = resolve;
+      document.head.appendChild(script);
+    });
+  }
+  return inpostWidgetPromise;
+}
+
 function openPointPicker() {
-  pointPicker.classList.add("open");
-  pointOverlay.classList.add("open");
+  openModal(pointPicker, pointOverlay);
+  loadInpostWidget();
 }
 function closePointPicker() {
-  pointPicker.classList.remove("open");
-  pointOverlay.classList.remove("open");
+  closeModal(pointPicker, pointOverlay);
 }
 
 document.getElementById("pickPointBtn").addEventListener("click", openPointPicker);
 pointOverlay.addEventListener("click", closePointPicker);
 document.getElementById("pointClose").addEventListener("click", closePointPicker);
+pointPicker.addEventListener("modal:close", closePointPicker);
 
 document.addEventListener("cart:need-point", () => {
   openCart();

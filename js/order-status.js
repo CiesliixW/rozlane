@@ -9,12 +9,10 @@
   const body = document.getElementById("orderModalBody");
 
   function open() {
-    overlay.classList.add("open");
-    modal.classList.add("open");
+    openModal(modal, overlay);
   }
   function close() {
-    overlay.classList.remove("open");
-    modal.classList.remove("open");
+    closeModal(modal, overlay);
   }
 
   function wireContinue() {
@@ -67,6 +65,7 @@
 
   overlay.addEventListener("click", close);
   document.getElementById("orderClose").addEventListener("click", close);
+  modal.addEventListener("modal:close", close);
 
   window.history.replaceState(null, "", window.location.pathname);
   open();
