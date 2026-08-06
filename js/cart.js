@@ -269,11 +269,20 @@ const Cart = (() => {
     const total = getSubtotal() - promo.discount + (lines.length ? shippingCost : 0);
     totalEl.textContent = fmt(total);
 
-    checkoutBtn.disabled = !lines.length;
+    checkoutBtn.disabled = !lines.length || !termsAccepted();
+  }
+
+  function termsAccepted() {
+    const el = document.getElementById("acceptTerms");
+    return !!el && el.checked;
   }
 
   async function checkout() {
     if (!lines.length) return;
+    if (!termsAccepted()) {
+      alert("Zaznacz akceptację Regulaminu i Polityki Prywatności, aby kontynuować.");
+      return;
+    }
     if (!deliveryPoint) {
       document.dispatchEvent(new CustomEvent("cart:need-point"));
       return;
@@ -319,6 +328,10 @@ const Cart = (() => {
     });
 
     document.getElementById("cartCheckout").addEventListener("click", checkout);
+
+    document.getElementById("acceptTerms").addEventListener("change", () => {
+      document.getElementById("cartCheckout").disabled = !lines.length || !termsAccepted();
+    });
   });
 
   return { addItem, getCount, getDeliveryPoint, setDeliveryPoint, checkout, clear, render };
