@@ -68,7 +68,7 @@ const Cart = (() => {
     } else if (status.freeShippingMet) {
       parts.push("Masz darmową wysyłkę!");
     } else {
-      parts.push(`Dodaj jeszcze ${status.freeShippingRemaining} (${size}) i miej darmową wysyłkę!`);
+      parts.push(`Dodaj jeszcze ${status.freeShippingRemaining} i miej darmową wysyłkę!`);
     }
 
     if (status.nextFreeTier) {
@@ -183,7 +183,7 @@ const Cart = (() => {
     const pct = Math.min(100, (count / max) * 100);
     const dots = milestones.map((m) => {
       const reached = count >= m.at;
-      return `<div class="promo-dot${reached ? " reached" : ""}" style="left:${(m.at / max) * 100}%" title="${m.label} — ${m.at} szt.">${reached ? "✓" : m.at}</div>`;
+      return `<div class="promo-dot${reached ? " reached" : ""}" style="left:${(m.at / max) * 100}%" title="${m.label} - ${m.at} szt.">${reached ? "✓" : m.at}</div>`;
     }).join("");
     return `<div class="promo-track"><div class="promo-track-fill" style="width:${pct}%"></div>${dots}</div>`;
   }

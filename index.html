@@ -27,13 +27,13 @@
 <div class="promo">
   <div class="promo-ticker">
     <span>🚚 Darmowa dostawa przy 2 odlewkach 5&nbsp;ml</span>
-    <span>🎁 Kup 4 odlewki 5&nbsp;ml — najtańsza gratis!</span>
+    <span>🎁 Kup 4 odlewki 5&nbsp;ml - najtańsza gratis!</span>
     <span>🚚 Darmowa dostawa przy 3 odlewkach 2&nbsp;ml</span>
-    <span>🎁 Kup 6 odlewek 2&nbsp;ml — najtańsza gratis!</span>
+    <span>🎁 Kup 6 odlewek 2&nbsp;ml - najtańsza gratis!</span>
     <span>🚚 Darmowa dostawa przy 2 odlewkach 5&nbsp;ml</span>
-    <span>🎁 Kup 4 odlewki 5&nbsp;ml — najtańsza gratis!</span>
+    <span>🎁 Kup 4 odlewki 5&nbsp;ml - najtańsza gratis!</span>
     <span>🚚 Darmowa dostawa przy 3 odlewkach 2&nbsp;ml</span>
-    <span>🎁 Kup 6 odlewek 2&nbsp;ml — najtańsza gratis!</span>
+    <span>🎁 Kup 6 odlewek 2&nbsp;ml - najtańsza gratis!</span>
   </div>
 </div>
 
@@ -55,12 +55,12 @@
 </nav>
 
 <section class="hero-banner">
-  <img class="bg" src="images/hero-bg.webp" alt="Perfumy męskie — bestsellery">
+  <img class="bg" src="images/hero-bg.webp" alt="Perfumy męskie - bestsellery">
   <div class="scrim"></div>
   <div class="content">
     <span class="eyebrow">Perfumy męskie · bestsellery</span>
     <h1>Drogie perfumy.<br>Na mililitry.</h1>
-    <p>Sauvage, Eros, Ombré Leather i reszta — oryginały odlewane na mililitry. Sprawdź zapach, zanim wydasz na cały flakon.</p>
+    <p>Sauvage, Eros, Ombré Leather i reszta - oryginały odlewane na mililitry. Sprawdź zapach, zanim wydasz na cały flakon.</p>
     <a class="cta" href="zasady-promocji.html">Aktualne promocje
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
     </a>
@@ -85,15 +85,28 @@
     <div><h2 id="grid-title">Bestsellery</h2><p id="grid-sub">Najczęściej zamawiane odlewki w tym miesiącu</p></div>
     <a class="link" href="#grid" data-filter="all">Zobacz wszystkie →</a>
   </div>
-  <div class="filterbar"><div class="inner">
-    <button class="chip active" data-filter="all">Wszystkie</button>
-    <button class="chip" data-filter="best">Bestsellery</button>
-    <button class="chip" data-filter="meskie">Męskie</button>
-    <button class="chip" data-filter="damskie">Damskie</button>
-    <button class="chip" data-filter="unisex">Unisex</button>
-    <button class="chip" data-filter="nisza">Nisza</button>
-    <span class="count" id="count"></span>
-  </div></div>
+  <div class="filterbar">
+    <div class="inner">
+      <button class="chip active" data-filter="all">Wszystkie</button>
+      <button class="chip" data-filter="best">Bestsellery</button>
+      <button class="chip" data-filter="meskie">Męskie</button>
+      <button class="chip" data-filter="damskie">Damskie</button>
+      <button class="chip" data-filter="unisex">Unisex</button>
+      <button class="chip" data-filter="nisza">Nisza</button>
+      <span class="count" id="count"></span>
+    </div>
+    <div class="filter-controls">
+      <select id="brandFilter" class="select-filter" aria-label="Filtruj po marce">
+        <option value="">Wszystkie marki</option>
+      </select>
+      <select id="sortFilter" class="select-filter" aria-label="Sortuj produkty">
+        <option value="default">Sortuj: domyślnie</option>
+        <option value="price-asc">Cena: od najniższej</option>
+        <option value="price-desc">Cena: od najwyższej</option>
+        <option value="tier">Klasa</option>
+      </select>
+    </div>
+  </div>
   <div class="grid" id="grid"></div>
 </main>
 
@@ -101,7 +114,7 @@
   <div class="foot-inner">
     <div class="foot-brand">
       <div class="brand">rozlane<span class="dot">.</span>pl</div>
-      <p>Odlewki oryginalnych perfum. Każdy mililitr odmierzamy na wadze, przelewamy do szklanego atomizera i wysyłamy z Warszawy w 24 h.</p>
+      <p>Odlewki oryginalnych perfum. Każdy mililitr odmierzamy specjalistyczną strzykawką z dokładnością do 0,1 ml, przelewamy do szklanego atomizera i wysyłamy z Warszawy w 24 h.</p>
     </div>
     <div class="foot-col"><h4>Sklep</h4><a href="#grid" data-filter="best">Bestsellery</a></div>
     <div class="foot-col"><h4>Pomoc</h4><a href="jak-dzialaja-odlewki.html">Jak działają odlewki</a><a href="zwroty.html">Wysyłka i zwroty</a><a href="autentycznosc.html">Autentyczność</a><a href="mailto:kontakt@rozlane.pl">Kontakt</a></div>

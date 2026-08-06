@@ -69,16 +69,37 @@ const FILTER_LABELS = {
   nisza: ["Nisza", "Zapachy niszowe i selektywne"],
 };
 
+const TIER_RANK = { designer: 0, premium: 1, nisza: 2, ultra: 3 };
+
 let currentFilter = "all";
+let currentBrand = "";
+let currentSort = "default";
 
 function applyFilters() {
   const query = document.getElementById("search").value.trim().toLowerCase();
-  const list = PRODUCTS.filter((p) => {
+  let list = PRODUCTS.filter((p) => {
     const matchesFilter = currentFilter === "all" ? true : currentFilter === "best" ? p.best : p.g.includes(currentFilter);
     const matchesQuery = !query || (p.h + " " + p.n).toLowerCase().includes(query);
-    return matchesFilter && matchesQuery;
+    const matchesBrand = !currentBrand || p.h === currentBrand;
+    return matchesFilter && matchesQuery && matchesBrand;
   });
+
+  if (currentSort === "price-asc") {
+    list = list.slice().sort((a, b) => PRICE_TABLE[a.t][0] - PRICE_TABLE[b.t][0]);
+  } else if (currentSort === "price-desc") {
+    list = list.slice().sort((a, b) => PRICE_TABLE[b.t][0] - PRICE_TABLE[a.t][0]);
+  } else if (currentSort === "tier") {
+    list = list.slice().sort((a, b) => TIER_RANK[a.t] - TIER_RANK[b.t]);
+  }
+
   render(list);
+}
+
+function populateBrandFilter() {
+  const brandSelect = document.getElementById("brandFilter");
+  const brands = [...new Set(PRODUCTS.map((p) => p.h))].sort((a, b) => a.localeCompare(b, "pl"));
+  brandSelect.innerHTML = '<option value="">Wszystkie marki</option>'
+    + brands.map((b) => `<option value="${escapeHtml(b)}">${escapeHtml(b)}</option>`).join("");
 }
 
 function setFilter(filterKey) {
@@ -97,8 +118,20 @@ document.querySelectorAll("[data-filter]").forEach((el) => {
 });
 document.getElementById("search").addEventListener("input", applyFilters);
 
+document.getElementById("brandFilter").addEventListener("change", (e) => {
+  currentBrand = e.target.value;
+  applyFilters();
+});
+document.getElementById("sortFilter").addEventListener("change", (e) => {
+  currentSort = e.target.value;
+  applyFilters();
+});
+
 grid.innerHTML = '<div class="empty">Ładowanie katalogu…</div>';
-productsReady.then(() => render(PRODUCTS));
+productsReady.then(() => {
+  populateBrandFilter();
+  render(PRODUCTS);
+});
 
 // Minimal WAI-ARIA dialog behavior shared by every overlay+panel modal on
 // the page (cart drawer, point picker, order confirmation): traps Tab
