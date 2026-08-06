@@ -99,7 +99,7 @@
   .chip.active{background:var(--ink);border-color:var(--ink);color:#fff;font-weight:600}
   .count{margin-left:auto;font-size:13px;color:var(--faint)}
   .filter-controls{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
-  .select-filter{flex:1;min-width:150px;font-size:13.5px;font-weight:500;color:var(--ink);background:var(--surface);border:1px solid var(--line-2);padding:9px 14px;border-radius:999px;cursor:pointer;font-family:var(--sans);transition:border-color .15s}
+  .select-filter{width:auto;font-size:13.5px;font-weight:500;color:var(--ink);background:var(--surface);border:1px solid var(--line-2);padding:9px 14px;border-radius:999px;cursor:pointer;font-family:var(--sans);transition:border-color .15s}
   .select-filter:hover{border-color:var(--faint)}
 
   /* grid */
@@ -232,6 +232,9 @@
   .legal-callout b{display:block;font-size:15px;margin-bottom:4px}
   .legal-callout span{color:var(--muted)}
   .legal-form p{font-size:13.5px;margin-bottom:8px}
+  .legal-cta{text-align:center;margin:36px 0}
+  .btn-primary{display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:#fff;font-weight:600;font-size:14.5px;padding:13px 28px;border-radius:10px;transition:background .16s}
+  .btn-primary:hover{background:var(--accent)}
 
   .order-overlay{position:fixed;inset:0;background:rgba(20,16,10,.5);opacity:0;pointer-events:none;transition:opacity .25s;z-index:150}
   .order-overlay.open{opacity:1;pointer-events:auto}
@@ -272,6 +275,8 @@
     .filterbar{top:60px}
   }
   @media (max-width:560px){
+    .select-filter{flex:1;min-width:140px}
+
     .nav{padding:12px 14px;gap:8px}
     .brand{font-size:20px}
     .nav-tools{gap:6px}
@@ -295,6 +300,26 @@
     .vb .ic{width:34px;height:34px}
     .vb .txt b{font-size:11.5px;line-height:1.25}
     .vb .txt span{display:none}
+
+    .grid{grid-template-columns:repeat(2,1fr);gap:10px;padding:16px 0 14px}
+    .card{padding:8px 8px 10px;border-radius:12px}
+    .card:hover{transform:none}
+    .badge-best{top:12px;left:12px;font-size:9px;padding:4px 7px;border-radius:6px}
+    .photowrap{height:100px;border-radius:9px;margin-bottom:8px}
+    .photowrap img{max-height:86px}
+    .vialwrap{height:100px;margin-bottom:8px}
+    .house{font-size:9px;letter-spacing:.08em}
+    .pname{font-size:14px;line-height:1.15;margin:2px 0 3px}
+    .notes{display:none}
+    .rating{font-size:10px;margin:4px 0 2px;gap:3px}
+    .sizes{gap:3px;margin:6px 0 4px}
+    .size{font-size:9.5px;padding:5px 0;border-radius:6px}
+    .spray-info{font-size:9px;padding:2px 7px;margin-bottom:5px}
+    .buyrow{gap:5px}
+    .price{font-size:14px}
+    .price small{font-size:9px}
+    .add{padding:7px 8px;font-size:10px;gap:4px;border-radius:8px}
+    .add svg{width:12px;height:12px}
 
     .cart-drawer{width:100%}
     .promo-note{padding:8px 12px 7px;margin-bottom:6px;font-size:11px}

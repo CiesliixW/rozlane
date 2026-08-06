@@ -61,15 +61,13 @@ function render(list) {
 }
 
 const FILTER_LABELS = {
-  all: ["Katalog", "Wszystkie odlewki w ofercie"],
+  all: ["Produkty", "Wszystkie odlewki w ofercie"],
   best: ["Bestsellery", "Najczęściej zamawiane w tym miesiącu"],
   meskie: ["Perfumy męskie", "Odlewki zapachów męskich"],
   damskie: ["Perfumy damskie", "Odlewki zapachów damskich"],
   unisex: ["Unisex", "Zapachy dla każdego"],
   nisza: ["Nisza", "Zapachy niszowe i selektywne"],
 };
-
-const TIER_RANK = { designer: 0, premium: 1, nisza: 2, ultra: 3 };
 
 let currentFilter = "all";
 let currentBrand = "";
@@ -88,8 +86,6 @@ function applyFilters() {
     list = list.slice().sort((a, b) => PRICE_TABLE[a.t][0] - PRICE_TABLE[b.t][0]);
   } else if (currentSort === "price-desc") {
     list = list.slice().sort((a, b) => PRICE_TABLE[b.t][0] - PRICE_TABLE[a.t][0]);
-  } else if (currentSort === "tier") {
-    list = list.slice().sort((a, b) => TIER_RANK[a.t] - TIER_RANK[b.t]);
   }
 
   render(list);
