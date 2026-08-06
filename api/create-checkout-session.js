@@ -47,7 +47,8 @@ module.exports = async function handler(req, res) {
   try {
     products = await fetchProducts();
   } catch (err) {
-    return res.status(500).json({ error: "Nie udało się pobrać katalogu produktów" });
+    console.error("fetchProducts failed:", err);
+    return res.status(500).json({ error: "Nie udało się pobrać katalogu produktów", detail: err.message });
   }
 
   const validatedItems = [];
@@ -117,6 +118,7 @@ module.exports = async function handler(req, res) {
     const session = await stripe.checkout.sessions.create(sessionParams);
     return res.status(200).json({ url: session.url });
   } catch (err) {
-    return res.status(500).json({ error: "Nie udało się utworzyć sesji płatności" });
+    console.error("Stripe checkout session creation failed:", err);
+    return res.status(500).json({ error: "Nie udało się utworzyć sesji płatności", detail: err.message, code: err.code || err.type });
   }
 };
