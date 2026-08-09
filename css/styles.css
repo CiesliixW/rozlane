@@ -118,8 +118,9 @@
   .vial .fill{position:absolute;bottom:0;left:0;width:100%;background:linear-gradient(180deg,#E0B366,#B0803A);box-shadow:inset 0 2px 6px rgba(255,255,255,.4)}
   .vial .shine{position:absolute;top:26px;left:8px;width:5px;height:78px;background:linear-gradient(rgba(255,255,255,.6),transparent);border-radius:4px}
 
-  .house{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);font-weight:600}
-  .pname{font-family:var(--serif);font-weight:600;font-size:20px;line-height:1.1;margin:4px 0 7px}
+  .house{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .decant-tag{font-size:10px;font-weight:600;letter-spacing:.03em;color:var(--accent);margin-top:2px}
+  .pname{font-family:var(--serif);font-weight:600;font-size:20px;line-height:1.1;margin:4px 0 7px;min-height:44px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
   .notes{font-size:12.5px;color:var(--muted);line-height:1.42;min-height:36px;letter-spacing:0}
   .rating{display:flex;align-items:center;gap:5px;margin:9px 0 2px;font-size:12.5px;color:var(--muted)}
   .stars{color:var(--gold);letter-spacing:1px}
@@ -128,7 +129,7 @@
   .size{flex:1;text-align:center;font-family:inherit;font-size:12.5px;color:var(--muted);background:var(--bg);border:1px solid var(--line-2);border-radius:8px;padding:8px 0;cursor:pointer;transition:all .14s;font-weight:500}
   .size:hover{border-color:var(--faint);color:var(--ink)}
   .size.active{background:var(--accent-soft);border-color:var(--accent);color:var(--accent);font-weight:700}
-  .spray-info{display:inline-flex;align-items:center;font-size:11.5px;font-weight:700;color:var(--accent);background:var(--accent-soft);padding:3px 10px;border-radius:999px;margin-bottom:9px;letter-spacing:.01em}
+  .spray-info{display:inline-flex;align-self:flex-start;align-items:center;font-size:11.5px;font-weight:700;color:var(--accent);background:var(--accent-soft);padding:3px 10px;border-radius:999px;margin-bottom:9px;letter-spacing:.01em}
 
   .buyrow{display:flex;align-items:center;justify-content:space-between;margin-top:auto;gap:10px}
   .price{font-size:21px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
@@ -309,7 +310,8 @@
     .photowrap img{max-height:86px}
     .vialwrap{height:100px;margin-bottom:8px}
     .house{font-size:9px;letter-spacing:.08em}
-    .pname{font-size:14px;line-height:1.15;margin:2px 0 3px}
+    .decant-tag{font-size:8.5px;margin-top:1px}
+    .pname{font-size:14px;line-height:1.15;margin:2px 0 3px;min-height:32px}
     .notes{display:none}
     .rating{font-size:10px;margin:4px 0 2px;gap:3px}
     .sizes{gap:3px;margin:6px 0 4px}

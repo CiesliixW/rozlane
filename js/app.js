@@ -22,6 +22,7 @@ function card(product) {
     ${product.best ? '<span class="badge-best">Bestseller</span>' : ""}
     ${media(product)}
     <div class="house">${escapeHtml(product.h)}</div>
+    <div class="decant-tag">Odlewka Perfum</div>
     <div class="pname">${escapeHtml(product.n)}</div>
     <div class="notes">${escapeHtml(product.no)}</div>
     <div class="rating"><span class="stars" aria-hidden="true">${stars(product.r)}</span> <span>${product.r.toFixed(1).replace(".", ",")} · ${product.c} opinii</span></div>

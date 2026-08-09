@@ -65,7 +65,7 @@ module.exports = async function handler(req, res) {
     line_items.push({
       price_data: {
         currency: "pln",
-        product_data: { name: `${product.h} ${product.n} — ${item.size}` },
+        product_data: { name: `${product.h} ${product.n} - Odlewka perfum - ${item.size}` },
         unit_amount: Math.round(price * 100),
       },
       quantity: qty,
@@ -94,7 +94,7 @@ module.exports = async function handler(req, res) {
             type: "fixed_amount",
             fixed_amount: { amount: shippingAmount, currency: "pln" },
             display_name: promo.freeShipping
-              ? `InPost Paczkomat (${deliveryPoint.code}) — gratis`
+              ? `InPost Paczkomat (${deliveryPoint.code}) - gratis`
               : `InPost Paczkomat (${deliveryPoint.code})`,
           },
         },
