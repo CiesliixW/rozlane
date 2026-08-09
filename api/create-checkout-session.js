@@ -106,6 +106,9 @@ module.exports = async function handler(req, res) {
     };
 
     if (promo.discount > 0) {
+      // Stripe rejects a session that sets both `discounts` and
+      // `allow_promotion_codes`, so the site's own automatic gratis-item
+      // discount takes priority over letting the customer type a code.
       const coupon = await stripe.coupons.create({
         amount_off: Math.round(promo.discount * 100),
         currency: "pln",
@@ -113,6 +116,8 @@ module.exports = async function handler(req, res) {
         name: "Promocja odlewek",
       });
       sessionParams.discounts = [{ coupon: coupon.id }];
+    } else {
+      sessionParams.allow_promotion_codes = true;
     }
 
     const session = await stripe.checkout.sessions.create(sessionParams);
