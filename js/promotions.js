@@ -1,6 +1,5 @@
 const _deps = (typeof module !== "undefined" && module.exports) ? require("./products.js") : null;
 const _SIZES = _deps ? _deps.SIZES : SIZES;
-const _PRICE_TABLE = _deps ? _deps.PRICE_TABLE : PRICE_TABLE;
 
 // "Nie łączymy 5 z 2" — each size below has its own independent set of tiers.
 const PROMO_RULES = {
@@ -22,7 +21,7 @@ function unitPricesForSize(items, size, products) {
     const product = products.find((p) => p.id === item.id);
     if (!product) continue;
     const sizeIndex = _SIZES.indexOf(size);
-    const price = _PRICE_TABLE[product.t][sizeIndex];
+    const price = product.pr[sizeIndex];
     for (let i = 0; i < item.qty; i++) prices.push(price);
   }
   return prices;

@@ -14,7 +14,7 @@ function media(product) {
 }
 
 function card(product) {
-  const prices = PRICE_TABLE[product.t];
+  const prices = product.pr;
   let selectedSize = SIZES[0];
   const el = document.createElement("article");
   el.className = "card";
@@ -84,9 +84,9 @@ function applyFilters() {
   });
 
   if (currentSort === "price-asc") {
-    list = list.slice().sort((a, b) => PRICE_TABLE[a.t][0] - PRICE_TABLE[b.t][0]);
+    list = list.slice().sort((a, b) => a.pr[0] - b.pr[0]);
   } else if (currentSort === "price-desc") {
-    list = list.slice().sort((a, b) => PRICE_TABLE[b.t][0] - PRICE_TABLE[a.t][0]);
+    list = list.slice().sort((a, b) => b.pr[0] - a.pr[0]);
   }
 
   render(list);

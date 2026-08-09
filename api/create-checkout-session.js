@@ -1,5 +1,5 @@
 const Stripe = require("stripe");
-const { PRICE_TABLE, SIZES } = require("../js/products.js");
+const { SIZES } = require("../js/products.js");
 const Promotions = require("../js/promotions.js");
 const { fetchProducts } = require("./_products.js");
 
@@ -60,7 +60,7 @@ module.exports = async function handler(req, res) {
     if (!product || sizeIndex === -1 || !Number.isInteger(qty) || qty < 1 || qty > 20) {
       return res.status(400).json({ error: `Invalid cart item: ${item.id}` });
     }
-    const price = PRICE_TABLE[product.t][sizeIndex];
+    const price = product.pr[sizeIndex];
     validatedItems.push({ id: item.id, size: item.size, qty });
     line_items.push({
       price_data: {

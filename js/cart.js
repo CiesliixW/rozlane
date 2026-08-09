@@ -51,7 +51,7 @@ const Cart = (() => {
 
   function priceOf(line) {
     const product = findProduct(line.id);
-    return PRICE_TABLE[product.t][SIZES.indexOf(line.size)];
+    return product.pr[SIZES.indexOf(line.size)];
   }
 
   function countForSize(size) {
@@ -269,6 +269,14 @@ const Cart = (() => {
     const total = getSubtotal() - promo.discount + (lines.length ? shippingCost : 0);
     totalEl.textContent = fmt(total);
 
+    const deliveryRow = document.getElementById("cartDeliveryRow");
+    if (deliveryRow) {
+      deliveryRow.style.display = lines.length && deliveryPoint ? "flex" : "none";
+      if (deliveryPoint) {
+        document.getElementById("cartDeliveryCode").textContent = deliveryPoint.code;
+      }
+    }
+
     checkoutBtn.disabled = !lines.length || !termsAccepted();
   }
 
@@ -328,6 +336,10 @@ const Cart = (() => {
     });
 
     document.getElementById("cartCheckout").addEventListener("click", checkout);
+
+    document.getElementById("cartDeliveryChange").addEventListener("click", () => {
+      document.dispatchEvent(new CustomEvent("cart:need-point"));
+    });
 
     document.getElementById("acceptTerms").addEventListener("change", () => {
       document.getElementById("cartCheckout").disabled = !lines.length || !termsAccepted();

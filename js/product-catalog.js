@@ -11,7 +11,7 @@ function transformProductRow(row) {
     h: row.house,
     n: row.name,
     no: row.notes,
-    t: row.tier,
+    pr: [Number(row.price_2ml), Number(row.price_5ml), Number(row.price_10ml), Number(row.price_30ml)],
     g: row.genders,
     best: row.best ? 1 : 0,
     img: PRODUCT_IMAGE_BASE + filename,
