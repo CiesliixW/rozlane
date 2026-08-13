@@ -25,7 +25,7 @@ function card(product) {
     <div class="decant-tag">Odlewka Perfum</div>
     <div class="pname">${escapeHtml(product.n)}</div>
     <div class="notes">${escapeHtml(product.no)}</div>
-    <div class="rating"><span class="stars" aria-hidden="true">${stars(product.r)}</span> <span>${product.r.toFixed(1).replace(".", ",")} · ${product.c} opinii</span></div>
+    <div class="rating"><span class="stars" aria-hidden="true">${stars(product.r)}</span> <span>${product.r.toFixed(1).replace(".", ",")} · ${product.c} opinii <span class="rating-source">(Notino)</span></span></div>
     <div class="sizes" role="group" aria-label="Pojemność">${SIZES.map((s, j) => `<button type="button" class="size${j === 0 ? " active" : ""}" data-i="${j}">${s}</button>`).join("")}</div>
     <div class="spray-info">~${Promotions.spraysForSize(SIZES[0])} psiknięć</div>
     <div class="buyrow">
@@ -50,15 +50,29 @@ function card(product) {
   return el;
 }
 
+function suggestCard() {
+  const el = document.createElement("article");
+  el.className = "card suggest-card";
+  el.innerHTML = `
+    <div class="suggest-icon" aria-hidden="true">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v18M3 12h18"/></svg>
+    </div>
+    <div class="pname">Nie ma Twojego zapachu?</div>
+    <div class="notes">Napisz nam, jaki zapach chcesz zobaczyć w ofercie - dodamy go najszybciej, jak się da.</div>
+    <button type="button" class="add suggest-open">Zaproponuj zapach</button>`;
+  return el;
+}
+
 function render(list) {
   grid.innerHTML = "";
   if (!list.length) {
     grid.innerHTML = '<div class="empty">Brak perfum dla tego filtra.</div>';
     countEl.textContent = "0 produktów";
-    return;
+  } else {
+    list.forEach((p) => grid.appendChild(card(p)));
+    countEl.textContent = list.length + " produktów";
   }
-  list.forEach((p) => grid.appendChild(card(p)));
-  countEl.textContent = list.length + " produktów";
+  grid.appendChild(suggestCard());
 }
 
 const FILTER_LABELS = {

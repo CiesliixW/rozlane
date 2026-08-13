@@ -176,12 +176,46 @@
   <div id="orderModalBody"></div>
 </div>
 
+<div class="order-overlay" id="suggestOverlay" aria-hidden="true"></div>
+<div class="order-modal" id="suggestModal" role="dialog" aria-modal="true" aria-labelledby="suggestModalTitle" tabindex="-1">
+  <button class="cart-close" id="suggestClose" aria-label="Zamknij">✕</button>
+  <div id="suggestModalBody">
+    <h3 id="suggestModalTitle">Zaproponuj zapach</h3>
+    <p class="order-status">Nie znalazłeś tego, czego szukasz? Napisz, jaki zapach ma pojawić się w ofercie.</p>
+    <form id="suggestForm">
+      <div class="field">
+        <label for="suggestFragrance">Zapach *</label>
+        <input type="text" id="suggestFragrance" name="fragrance" required maxlength="150" placeholder="np. Chanel Bleu de Chanel">
+      </div>
+      <div class="field">
+        <label for="suggestContact">E-mail (opcjonalnie)</label>
+        <input type="email" id="suggestContact" name="contact" maxlength="200" placeholder="Damy znać, gdy dodamy zapach">
+      </div>
+      <div class="field">
+        <label for="suggestNote">Dodatkowa wiadomość (opcjonalnie)</label>
+        <textarea id="suggestNote" name="note" maxlength="500" rows="3"></textarea>
+      </div>
+      <p class="order-note" id="suggestError" style="display:none;color:var(--accent)"></p>
+      <button type="submit" class="cart-checkout" id="suggestSubmit">Wyślij propozycję</button>
+    </form>
+    <div id="suggestSuccess" style="display:none">
+      <div class="order-icon success">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6 9 17l-5-5"/></svg>
+      </div>
+      <h3>Dzięki za propozycję!</h3>
+      <p class="order-status">Zapisaliśmy Twoją propozycję zapachu. Jeśli podałeś e-mail, damy znać, gdy się pojawi w ofercie.</p>
+      <button type="button" class="cart-checkout" id="suggestDone">Zamknij</button>
+    </div>
+  </div>
+</div>
+
 <script src="js/products.js" defer></script>
 <script src="js/product-catalog.js" defer></script>
 <script src="js/promotions.js" defer></script>
 <script src="js/cart.js" defer></script>
 <script src="js/app.js" defer></script>
 <script src="js/order-status.js" defer></script>
+<script src="js/suggest-fragrance.js" defer></script>
 <div class="cookie-banner" id="cookieBanner" role="region" aria-label="Zgoda na pliki cookie">
   <p>Używamy technologii niezbędnych do działania koszyka. Widget mapy Paczkomatów InPost ładujemy wyłącznie na Twoje żądanie, po kliknięciu „Wybierz paczkomat”. Nie używamy cookies reklamowych ani śledzących. Szczegóły w <a href="regulamin.html#cookies">Polityce cookies</a>.</p>
   <div class="cookie-banner-actions">

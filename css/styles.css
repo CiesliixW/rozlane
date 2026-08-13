@@ -124,6 +124,7 @@
   .notes{font-size:12.5px;color:var(--muted);line-height:1.42;min-height:36px;letter-spacing:0}
   .rating{display:flex;align-items:center;gap:5px;margin:9px 0 2px;font-size:12.5px;color:var(--muted)}
   .stars{color:var(--gold);letter-spacing:1px}
+  .rating-source{font-size:.92em;color:var(--faint)}
 
   .sizes{display:flex;gap:6px;margin:12px 0 6px}
   .size{flex:1;text-align:center;font-family:inherit;font-size:12.5px;color:var(--muted);background:var(--bg);border:1px solid var(--line-2);border-radius:8px;padding:8px 0;cursor:pointer;transition:all .14s;font-weight:500}
@@ -262,6 +263,20 @@
   .order-delivery b{color:var(--ink)}
   .order-note{font-size:13px;color:var(--faint);text-align:center;margin-bottom:20px}
   #orderModal .cart-checkout{margin-top:4px}
+
+  .suggest-card{align-items:flex-start;background:var(--accent-soft);border-style:dashed;border-color:var(--accent)}
+  .suggest-icon{width:44px;height:44px;border-radius:50%;background:#fff;color:var(--accent);display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+  .suggest-card .pname{min-height:auto}
+  .suggest-card .notes{min-height:auto}
+  .suggest-open{margin-top:auto}
+
+  #suggestModal .field{margin-bottom:14px;text-align:left}
+  #suggestModal .field label{display:block;font-size:12.5px;font-weight:600;color:var(--muted);margin-bottom:5px}
+  #suggestModal .field input,
+  #suggestModal .field textarea{width:100%;border:1px solid var(--line-2);border-radius:9px;padding:10px 12px;font-family:var(--sans);font-size:13.5px;color:var(--ink);background:var(--bg);outline:none;transition:border-color .16s;resize:vertical}
+  #suggestModal .field input:focus,
+  #suggestModal .field textarea:focus{border-color:var(--accent)}
+  #suggestSuccess .cart-checkout{margin-top:4px}
 
   @media (max-width:860px){
     .hero-banner{min-height:480px}
