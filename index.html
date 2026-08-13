@@ -209,6 +209,41 @@
   </div>
 </div>
 
+<div class="order-overlay" id="newsletterOverlay" aria-hidden="true"></div>
+<div class="order-modal" id="newsletterModal" role="dialog" aria-modal="true" aria-labelledby="newsletterModalTitle" tabindex="-1">
+  <button class="cart-close" id="newsletterClose" aria-label="Zamknij">✕</button>
+  <div id="newsletterModalBody">
+    <div class="newsletter-badge">-10%</div>
+    <h3 id="newsletterModalTitle">Zapisz się i odbierz 10% rabatu</h3>
+    <p class="order-status">Zostaw e-mail, a dostaniesz kod na 10% zniżki na zamówienie. Kod nie łączy się z promocją „odlewka gratis”.</p>
+    <form id="newsletterForm">
+      <div class="field">
+        <label for="newsletterEmail">Adres e-mail</label>
+        <input type="email" id="newsletterEmail" name="email" required maxlength="200" placeholder="twoj@email.pl">
+      </div>
+      <label class="cart-terms">
+        <input type="checkbox" id="newsletterConsent" required>
+        <span>Wyrażam zgodę na otrzymywanie newslettera drogą elektroniczną zgodnie z <a href="regulamin.html#dane-osobowe" target="_blank" rel="noopener">Polityką Prywatności</a>.</span>
+      </label>
+      <p class="order-note" id="newsletterError" style="display:none;color:var(--accent)"></p>
+      <button type="submit" class="cart-checkout" id="newsletterSubmit">Odbierz kod</button>
+    </form>
+    <div id="newsletterSuccess" style="display:none">
+      <div class="order-icon success">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6 9 17l-5-5"/></svg>
+      </div>
+      <h3>Dziękujemy za zapis!</h3>
+      <p class="order-status">Twój kod rabatowy:</p>
+      <div class="newsletter-code-row">
+        <div class="newsletter-code" id="newsletterCode"></div>
+        <button type="button" class="link-btn" id="newsletterCopy">Kopiuj</button>
+      </div>
+      <p class="order-note">Wpisz go w polu kodu promocyjnego podczas płatności. Nie łączy się z promocją „odlewka gratis”.</p>
+      <button type="button" class="cart-checkout" id="newsletterDone">Zamknij</button>
+    </div>
+  </div>
+</div>
+
 <script src="js/products.js" defer></script>
 <script src="js/product-catalog.js" defer></script>
 <script src="js/promotions.js" defer></script>
@@ -216,6 +251,7 @@
 <script src="js/app.js" defer></script>
 <script src="js/order-status.js" defer></script>
 <script src="js/suggest-fragrance.js" defer></script>
+<script src="js/newsletter-popup.js" defer></script>
 <div class="cookie-banner" id="cookieBanner" role="region" aria-label="Zgoda na pliki cookie">
   <p>Używamy technologii niezbędnych do działania koszyka. Widget mapy Paczkomatów InPost ładujemy wyłącznie na Twoje żądanie, po kliknięciu „Wybierz paczkomat”. Nie używamy cookies reklamowych ani śledzących. Szczegóły w <a href="regulamin.html#cookies">Polityce cookies</a>.</p>
   <div class="cookie-banner-actions">
