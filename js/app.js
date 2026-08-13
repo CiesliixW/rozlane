@@ -73,6 +73,24 @@ function render(list) {
     countEl.textContent = list.length + " produktów";
   }
   grid.appendChild(suggestCard());
+  updateHeading(list.length);
+}
+
+// The heading normally reflects the active category chip, but an active
+// search query takes visual priority so it's clear the results below are
+// filtered by what was typed, not just the chip.
+function updateHeading(count) {
+  const query = document.getElementById("search").value.trim();
+  const titleEl = document.getElementById("grid-title");
+  const subEl = document.getElementById("grid-sub");
+  if (query) {
+    titleEl.textContent = "Wyniki wyszukiwania";
+    subEl.textContent = `„${query}” - ${count} ${count === 1 ? "wynik" : "wyników"}`;
+  } else {
+    const [title, subtitle] = FILTER_LABELS[currentFilter];
+    titleEl.textContent = title;
+    subEl.textContent = subtitle;
+  }
 }
 
 const FILTER_LABELS = {
@@ -89,12 +107,11 @@ let currentBrand = "";
 let currentSort = "default";
 
 function applyFilters() {
-  const query = document.getElementById("search").value.trim().toLowerCase();
+  const query = document.getElementById("search").value.trim();
   let list = PRODUCTS.filter((p) => {
     const matchesFilter = currentFilter === "all" ? true : currentFilter === "best" ? p.best : p.g.includes(currentFilter);
-    const matchesQuery = !query || (p.h + " " + p.n).toLowerCase().includes(query);
     const matchesBrand = !currentBrand || p.h === currentBrand;
-    return matchesFilter && matchesQuery && matchesBrand;
+    return matchesFilter && matchesBrand && SearchMatch.matches(p, query);
   });
 
   if (currentSort === "price-asc") {
@@ -116,9 +133,6 @@ function populateBrandFilter() {
 function setFilter(filterKey) {
   currentFilter = filterKey;
   document.querySelectorAll(".chip").forEach((x) => x.classList.toggle("active", x.dataset.filter === filterKey));
-  const [title, subtitle] = FILTER_LABELS[filterKey];
-  document.getElementById("grid-title").textContent = title;
-  document.getElementById("grid-sub").textContent = subtitle;
   applyFilters();
 }
 
