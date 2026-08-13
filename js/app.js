@@ -8,7 +8,7 @@ function stars(rating) {
 
 function media(product) {
   if (product.img) {
-    return `<div class="photowrap"><img src="${escapeHtml(product.img)}" alt="${escapeHtml(product.h)} ${escapeHtml(product.n)}" loading="lazy"></div>`;
+    return `<div class="photowrap"><img src="${escapeHtml(product.img)}" alt="Odlewka perfum ${escapeHtml(product.h)} ${escapeHtml(product.n)}" loading="lazy"></div>`;
   }
   return `<div class="vialwrap"><div class="vial"><div class="cap"></div><div class="neck"></div><div class="body"><div class="fill" style="height:${product.fill || 70}%"></div></div><div class="shine"></div></div></div>`;
 }

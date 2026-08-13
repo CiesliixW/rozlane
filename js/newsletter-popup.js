@@ -43,16 +43,20 @@
     submitBtn.textContent = "Wysyłam…";
 
     try {
-      const res = await fetch(`${SUPABASE_URL}/rest/v1/newsletter_subscribers?on_conflict=email`, {
+      // Plain insert, not an on_conflict upsert: Postgres RLS requires SELECT
+      // visibility to evaluate ON CONFLICT (even DO NOTHING), which the
+      // insert-only policy here deliberately doesn't grant. A duplicate
+      // email just means they're already subscribed -- still show the code.
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/newsletter_subscribers`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           apikey: SUPABASE_ANON_KEY,
-          Prefer: "resolution=ignore-duplicates,return=minimal",
+          Prefer: "return=minimal",
         },
         body: JSON.stringify({ email }),
       });
-      if (!res.ok) throw new Error("insert failed");
+      if (!res.ok && res.status !== 409) throw new Error("insert failed");
       codeEl.textContent = DISCOUNT_CODE;
       form.style.display = "none";
       success.style.display = "block";
