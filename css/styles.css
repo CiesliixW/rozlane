@@ -346,18 +346,13 @@
     .vb .txt b{font-size:11.5px;line-height:1.25}
     .vb .txt span{display:none}
 
-    /* List-style grid on mobile: dividing lines instead of gapped tiles,
-       so the freed-up space goes to bigger text/photos (like Rossmann). */
-    .grid{grid-template-columns:repeat(2,1fr);gap:0;padding:6px 0 4px}
-    .card{padding:14px 12px 18px;border-radius:0;border:none;border-bottom:1px solid var(--line);background:none}
-    .card:nth-child(odd){border-right:1px solid var(--line)}
-    .card:hover{transform:none;box-shadow:none}
-    .card.suggest-card{border:1px dashed var(--accent);border-radius:12px;background:var(--accent-soft);margin:6px}
-    .suggest-card .notes{display:block}
+    .grid{grid-template-columns:repeat(2,1fr);gap:14px;padding:18px 0 16px}
+    .card{padding:11px 11px 13px;border-radius:14px}
+    .card:hover{transform:none}
     .badge-best{top:12px;left:12px;font-size:9px;padding:4px 7px;border-radius:6px}
-    .photowrap{height:140px;border-radius:11px;margin-bottom:10px}
-    .photowrap img{max-height:124px}
-    .vialwrap{height:140px;margin-bottom:10px}
+    .photowrap{height:132px;border-radius:11px;margin-bottom:10px}
+    .photowrap img{max-height:116px}
+    .vialwrap{height:132px;margin-bottom:10px}
     .house{font-size:10.5px;letter-spacing:.06em}
     .decant-tag{font-size:9.5px;margin-top:2px}
     .pname{font-size:16px;line-height:1.2;margin:3px 0 4px;min-height:39px}
