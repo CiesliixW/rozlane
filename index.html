@@ -3,270 +3,77 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Odlewki perfum - oryginalne zapachy na mililitry | rozlane.pl</title>
-<meta name="description" content="Odlewki oryginalnych perfum (Sauvage, Eros, Ombré Leather i więcej) w pojemnościach 2-30 ml. 100% oryginał, wysyłka InPost w 24 h, darmowa dostawa przy większych zamówieniach.">
-<meta name="robots" content="index, follow">
-<link rel="canonical" href="https://www.rozlane.pl/">
-<link rel="icon" type="image/png" href="images/favicon.png">
-<!-- Vercel Web Analytics -->
-<script>
-  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-</script>
-<script defer src="/_vercel/insights/script.js"></script>
-<!-- Vercel Speed Insights -->
-<script>
-  window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
-</script>
-<script defer src="/_vercel/speed-insights/script.js"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css">
+<title>rozlane.pl — strona w budowie</title>
+<meta name="description" content="rozlane.pl — pracujemy nad odświeżeniem strony. Zaglądajcie niebawem!">
+<meta name="robots" content="noindex, nofollow">
+<style>
+  :root {
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: radial-gradient(circle at 50% 20%, #1c1a22 0%, #0c0a10 70%);
+    color: #f3efe9;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    text-align: center;
+    padding: 24px;
+  }
+  .wrap {
+    max-width: 480px;
+  }
+  .mark {
+    font-size: 14px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #c9a876;
+    margin-bottom: 24px;
+  }
+  h1 {
+    font-size: clamp(28px, 6vw, 40px);
+    line-height: 1.25;
+    margin: 0 0 16px;
+    font-weight: 600;
+  }
+  p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #b8b2bd;
+    margin: 0 0 32px;
+  }
+  .dots {
+    display: inline-flex;
+    gap: 6px;
+  }
+  .dots span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #c9a876;
+    animation: pulse 1.4s ease-in-out infinite;
+  }
+  .dots span:nth-child(2) { animation-delay: 0.2s; }
+  .dots span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes pulse {
+    0%, 80%, 100% { opacity: 0.25; transform: scale(0.8); }
+    40% { opacity: 1; transform: scale(1); }
+  }
+</style>
 </head>
 <body>
-
-<a class="skip-link" href="#main">Przejdź do treści</a>
-
-<div class="promo">
-  <div class="promo-ticker">
-    <span>🚚 Darmowa dostawa przy 2 odlewkach 5&nbsp;ml</span>
-    <span>🎁 Kup 4 odlewki 5&nbsp;ml - najtańsza gratis!</span>
-    <span>🚚 Darmowa dostawa przy 3 odlewkach 2&nbsp;ml</span>
-    <span>🎁 Kup 6 odlewek 2&nbsp;ml - najtańsza gratis!</span>
-    <span>🚚 Darmowa dostawa przy 2 odlewkach 5&nbsp;ml</span>
-    <span>🎁 Kup 4 odlewki 5&nbsp;ml - najtańsza gratis!</span>
-    <span>🚚 Darmowa dostawa przy 3 odlewkach 2&nbsp;ml</span>
-    <span>🎁 Kup 6 odlewek 2&nbsp;ml - najtańsza gratis!</span>
+  <div class="wrap">
+    <div class="mark">rozlane.pl</div>
+    <h1>Pracujemy nad stroną</h1>
+    <p>Wracamy niebawem z odświeżoną ofertą odlewek perfum. Dziękujemy za cierpliwość.</p>
+    <div class="dots"><span></span><span></span><span></span></div>
   </div>
-</div>
-
-<nav class="nav">
-  <div class="brand">rozlane<span class="dot">.</span>pl</div>
-  <div class="nav-links">
-    <a href="#grid" data-filter="best">Bestsellery</a><a href="#grid" data-filter="meskie">Męskie</a><a href="#grid" data-filter="damskie">Damskie</a><a href="#grid" data-filter="unisex">Unisex</a><a href="#grid" data-filter="nisza">Nisza</a>
-  </div>
-  <div class="nav-tools">
-    <div class="search-wrap">
-      <label class="searchbox">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-        <input id="search" type="text" placeholder="Szukaj perfum…" aria-label="Szukaj perfum" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="searchSuggestions" aria-autocomplete="list">
-        <button type="button" id="searchClear" class="search-clear" aria-label="Wyczyść wyszukiwanie" hidden>✕</button>
-      </label>
-      <div class="search-suggestions" id="searchSuggestions" role="listbox" aria-label="Sugestie wyszukiwania" hidden></div>
-    </div>
-    <div class="icon-btn" id="cart">
-      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>
-      <span class="badge" id="badge">0</span>
-    </div>
-  </div>
-</nav>
-
-<section class="hero-banner">
-  <img class="bg" src="images/hero-bg.webp" alt="Perfumy męskie - bestsellery">
-  <div class="scrim"></div>
-  <div class="content">
-    <span class="eyebrow">Perfumy męskie · bestsellery</span>
-    <h1>Drogie perfumy.<br>Na mililitry.</h1>
-    <p>Sauvage, Eros, Ombré Leather i reszta - oryginały odlewane na mililitry. Sprawdź zapach, zanim wydasz na cały flakon.</p>
-    <a class="cta" href="zasady-promocji.html">Aktualne promocje
-      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-    </a>
-    <div class="hero-badges">
-      <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> 100% oryginał</div>
-      <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Wysyłka 24 h</div>
-    </div>
-  </div>
-</section>
-
-<div class="valuebar">
-  <div class="valuebar-inner">
-    <div class="vb"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l7 3v5c0 4.4-3 7.6-7 9-4-1.4-7-4.6-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg></span><div class="txt"><b>Oryginał 100%</b><span>prosto z flakonu</span></div></div>
-    <div class="vb"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 6h13v10H1zM14 9h4l3 3v4h-7z"/><circle cx="6" cy="18" r="1.6"/><circle cx="18" cy="18" r="1.6"/></svg></span><div class="txt"><b>Wysyłka 24 h</b><span>InPost i kurier</span></div></div>
-    <div class="vb"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l2.5 5.6 6.1.6-4.6 4 1.4 6-5.4-3.2L6.6 19.2 8 13.2l-4.6-4 6.1-.6z"/></svg></span><div class="txt"><b>Ocena 4,9/5</b><span>ponad 3800 opinii</span></div></div>
-  </div>
-</div>
-
-<main class="wrap" id="main">
-  <div class="sec-head">
-    <div><h2 id="grid-title">Produkty</h2><p id="grid-sub">Wszystkie odlewki w ofercie</p></div>
-    <a class="link" href="#grid" data-filter="all">Zobacz wszystkie →</a>
-  </div>
-  <div class="filterbar">
-    <div class="inner">
-      <button class="chip active" data-filter="all">Wszystkie</button>
-      <button class="chip" data-filter="best">Bestsellery</button>
-      <button class="chip" data-filter="meskie">Męskie</button>
-      <button class="chip" data-filter="damskie">Damskie</button>
-      <button class="chip" data-filter="unisex">Unisex</button>
-      <button class="chip" data-filter="nisza">Nisza</button>
-      <span class="count" id="count"></span>
-    </div>
-    <div class="filter-controls">
-      <select id="brandFilter" class="select-filter" aria-label="Filtruj po marce">
-        <option value="">Wszystkie marki</option>
-      </select>
-      <select id="sortFilter" class="select-filter" aria-label="Sortuj produkty">
-        <option value="default">Sortuj: domyślnie</option>
-        <option value="price-asc">Cena: od najniższej</option>
-        <option value="price-desc">Cena: od najwyższej</option>
-      </select>
-    </div>
-  </div>
-  <div class="grid" id="grid"></div>
-</main>
-
-<footer>
-  <div class="foot-inner">
-    <div class="foot-brand">
-      <div class="brand">rozlane<span class="dot">.</span>pl</div>
-      <p>Odlewki oryginalnych perfum. Każdy mililitr odmierzamy specjalistyczną strzykawką z dokładnością do 0,1 ml, przelewamy do szklanego atomizera i wysyłamy z Warszawy w 24 h.</p>
-    </div>
-    <div class="foot-col"><h4>Sklep</h4><a href="#grid" data-filter="best">Bestsellery</a></div>
-    <div class="foot-col"><h4>Pomoc</h4><a href="jak-dzialaja-odlewki.html">Jak działają odlewki</a><a href="zwroty.html">Wysyłka i zwroty</a><a href="autentycznosc.html">Autentyczność</a><a href="mailto:kontakt@rozlane.pl">Kontakt</a></div>
-    <div class="foot-col"><h4>Obserwuj</h4><a href="https://www.instagram.com/rozlane_pl" target="_blank" rel="noopener">Instagram</a></div>
-  </div>
-  <div class="foot-bottom"><span>© 2026 rozlane.pl · wszystkie znaki towarowe należą do ich właścicieli</span><span><a href="regulamin.html">Regulamin</a> · <a href="regulamin.html#dane-osobowe">Prywatność</a> · <a href="zwroty.html">Zwroty</a></span></div>
-</footer>
-
-<div class="toast" id="toast">
-  <div class="toast-icon">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8"><path d="M20 6 9 17l-5-5"/></svg>
-  </div>
-  <div class="toast-title">Dodano do koszyka</div>
-  <div class="toast-promo" id="toastPromo"></div>
-</div>
-
-<div class="cart-overlay" id="cartOverlay" aria-hidden="true"></div>
-<aside class="cart-drawer" id="cartDrawer" role="dialog" aria-modal="true" aria-labelledby="cartDrawerTitle" tabindex="-1">
-  <div class="cart-drawer-head">
-    <h3 id="cartDrawerTitle">Koszyk</h3>
-    <button class="cart-close" id="cartClose" aria-label="Zamknij">✕</button>
-  </div>
-  <div class="cart-items" id="cartItems"></div>
-  <div id="promoProgress"></div>
-  <div class="cart-foot">
-    <div class="cart-delivery-point" id="cartDeliveryRow" style="display:none">
-      <span>Odbiór: Paczkomat <b id="cartDeliveryCode"></b></span>
-      <button type="button" id="cartDeliveryChange" class="link-btn">Zmień</button>
-    </div>
-    <div class="cart-row" id="cartDiscountRow" style="display:none"><span>Rabat</span><span id="cartDiscountPrice"></span></div>
-    <div class="cart-row" id="cartShippingRow"><span>Dostawa (InPost)</span><span id="cartShippingPrice"></span></div>
-    <div class="cart-total"><span>Razem</span><strong id="cartTotal">0,00 zł</strong></div>
-    <label class="cart-terms">
-      <input type="checkbox" id="acceptTerms">
-      <span>Akceptuję <a href="regulamin.html" target="_blank" rel="noopener">Regulamin</a> i <a href="regulamin.html#dane-osobowe" target="_blank" rel="noopener">Politykę Prywatności</a></span>
-    </label>
-    <button class="cart-checkout" id="cartCheckout" disabled>Przejdź do płatności</button>
-  </div>
-</aside>
-
-<div class="point-overlay" id="pointOverlay" aria-hidden="true"></div>
-<div class="point-picker" id="pointPicker" role="dialog" aria-modal="true" aria-labelledby="pointPickerTitle" tabindex="-1">
-  <div class="point-picker-head">
-    <h3 id="pointPickerTitle">Wybierz paczkomat</h3>
-    <button class="cart-close" id="pointClose" aria-label="Zamknij">✕</button>
-  </div>
-  <div class="point-picker-body">
-    <inpost-geowidget
-      token="eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJzQlpXVzFNZzVlQnpDYU1XU3JvTlBjRWFveFpXcW9Ua2FuZVB3X291LWxvIn0.eyJleHAiOjIxMDEwMzk2NDMsImlhdCI6MTc4NTY3OTY0MywianRpIjoiNWRkZjI4MDMtNjRmMC00ZTM3LThhOTktMTMyMzhhZTg0ODllIiwiaXNzIjoiaHR0cHM6Ly9sb2dpbi5pbnBvc3QucGwvYXV0aC9yZWFsbXMvZXh0ZXJuYWwiLCJzdWIiOiJmOjEyNDc1MDUxLTFjMDMtNGU1OS1iYTBjLTJiNDU2OTVlZjUzNTp2U3RzNXZGSXhfOUw2VFVqcF96X1FMejlvSWdmSk9tOE9VYS1RRXVWYl9BIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoic2hpcHgiLCJzZXNzaW9uX3N0YXRlIjoiYjQ4ZWZmYWYtYWY1My00ZTRhLThjOTMtNDExYTdlZmVhMzg0Iiwic2NvcGUiOiJvcGVuaWQgYXBpOmFwaXBvaW50cyIsInNpZCI6ImI0OGVmZmFmLWFmNTMtNGU0YS04YzkzLTQxMWE3ZWZlYTM4NCIsImFsbG93ZWRfcmVmZXJyZXJzIjoid3d3LnJvemxhbmUucGwscm96bGFuZS5wbCIsInV1aWQiOiI0YjZiMGRlZC05OGZhLTQ1MDgtYjEwYi01YmQ5NzQwNGI5ZjIifQ.LuB_i3nopyhOpIjZ33dPFZ1DqYOIhGS98AUvrjMkNss8dopCuI2a_FWrRZEf-KpgGuDpAVw0PGMe6-CUBDjzUV99a6e26qQ3qJQSwjgINCPvacIoagOTN4L7wA9cZy6dP4qfRVDNbeKoizOnP21a93jPjnmj10WESXL-xspnWiZ3htNgEkWNB6j_mIYe_GZt-anbz5oC-nZKn9At3Nu4j15odHp7cloJBRfQsiMR55m76vwop-kr3DhzA06ZvLNor6fTenier3KN9-VGSkVVOTAamtfdsq5SJhFJl_CpwTMY3X5e2TRv-F50MT9NImS27NdqUX9RwB4RHQsZHpHwZw"
-      language="pl"
-      config="parcelCollect"
-      onpoint="onInpostPointSelected"
-    ></inpost-geowidget>
-  </div>
-</div>
-
-<div class="order-overlay" id="orderOverlay" aria-hidden="true"></div>
-<div class="order-modal" id="orderModal" role="dialog" aria-modal="true" aria-label="Podsumowanie zamówienia" tabindex="-1">
-  <button class="cart-close" id="orderClose" aria-label="Zamknij">✕</button>
-  <div id="orderModalBody"></div>
-</div>
-
-<div class="order-overlay" id="suggestOverlay" aria-hidden="true"></div>
-<div class="order-modal" id="suggestModal" role="dialog" aria-modal="true" aria-labelledby="suggestModalTitle" tabindex="-1">
-  <button class="cart-close" id="suggestClose" aria-label="Zamknij">✕</button>
-  <div id="suggestModalBody">
-    <h3 id="suggestModalTitle">Zaproponuj zapach</h3>
-    <p class="order-status">Nie znalazłeś tego, czego szukasz? Napisz, jaki zapach ma pojawić się w ofercie.</p>
-    <form id="suggestForm">
-      <div class="field">
-        <label for="suggestFragrance">Zapach *</label>
-        <input type="text" id="suggestFragrance" name="fragrance" required maxlength="150" placeholder="np. Chanel Bleu de Chanel">
-      </div>
-      <div class="field">
-        <label for="suggestContact">E-mail (opcjonalnie)</label>
-        <input type="email" id="suggestContact" name="contact" maxlength="200" placeholder="Damy znać, gdy dodamy zapach">
-      </div>
-      <div class="field">
-        <label for="suggestNote">Dodatkowa wiadomość (opcjonalnie)</label>
-        <textarea id="suggestNote" name="note" maxlength="500" rows="3"></textarea>
-      </div>
-      <p class="order-note" id="suggestError" style="display:none;color:var(--accent)"></p>
-      <button type="submit" class="cart-checkout" id="suggestSubmit">Wyślij propozycję</button>
-    </form>
-    <div id="suggestSuccess" style="display:none">
-      <div class="order-icon success">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6 9 17l-5-5"/></svg>
-      </div>
-      <h3>Dzięki za propozycję!</h3>
-      <p class="order-status">Zapisaliśmy Twoją propozycję zapachu. Jeśli podałeś e-mail, damy znać, gdy się pojawi w ofercie.</p>
-      <button type="button" class="cart-checkout" id="suggestDone">Zamknij</button>
-    </div>
-  </div>
-</div>
-
-<div class="order-overlay" id="newsletterOverlay" aria-hidden="true"></div>
-<div class="order-modal" id="newsletterModal" role="dialog" aria-modal="true" aria-labelledby="newsletterModalTitle" tabindex="-1">
-  <button class="cart-close" id="newsletterClose" aria-label="Zamknij">✕</button>
-  <div id="newsletterModalBody">
-    <div class="newsletter-badge">-10%</div>
-    <h3 id="newsletterModalTitle">Zapisz się i odbierz 10% rabatu</h3>
-    <p class="order-status">Zostaw e-mail, a dostaniesz kod na 10% zniżki na zamówienie. Kod nie łączy się z promocją „odlewka gratis”.</p>
-    <form id="newsletterForm">
-      <div class="field">
-        <label for="newsletterEmail">Adres e-mail</label>
-        <input type="email" id="newsletterEmail" name="email" required maxlength="200" placeholder="twoj@email.pl">
-      </div>
-      <label class="cart-terms">
-        <input type="checkbox" id="newsletterConsent" required>
-        <span>Wyrażam zgodę na otrzymywanie newslettera drogą elektroniczną zgodnie z <a href="regulamin.html#dane-osobowe" target="_blank" rel="noopener">Polityką Prywatności</a>.</span>
-      </label>
-      <p class="order-note" id="newsletterError" style="display:none;color:var(--accent)"></p>
-      <button type="submit" class="cart-checkout" id="newsletterSubmit">Odbierz kod</button>
-    </form>
-    <div id="newsletterSuccess" style="display:none">
-      <div class="order-icon success">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6 9 17l-5-5"/></svg>
-      </div>
-      <h3>Dziękujemy za zapis!</h3>
-      <p class="order-status">Twój kod rabatowy:</p>
-      <div class="newsletter-code-row">
-        <div class="newsletter-code" id="newsletterCode"></div>
-        <button type="button" class="link-btn" id="newsletterCopy">Kopiuj</button>
-      </div>
-      <p class="order-note">Wpisz go w polu kodu promocyjnego podczas płatności. Nie łączy się z promocją „odlewka gratis”.</p>
-      <button type="button" class="cart-checkout" id="newsletterDone">Zamknij</button>
-    </div>
-  </div>
-</div>
-
-<script src="js/products.js" defer></script>
-<script src="js/product-catalog.js" defer></script>
-<script src="js/promotions.js" defer></script>
-<script src="js/search-match.js" defer></script>
-<script src="js/cart.js" defer></script>
-<script src="js/app.js" defer></script>
-<script src="js/order-status.js" defer></script>
-<script src="js/suggest-fragrance.js" defer></script>
-<script src="js/newsletter-popup.js" defer></script>
-<script src="js/search-suggestions.js" defer></script>
-<div class="cookie-banner" id="cookieBanner" role="region" aria-label="Zgoda na pliki cookie">
-  <p>Używamy technologii niezbędnych do działania koszyka. Widget mapy Paczkomatów InPost ładujemy wyłącznie na Twoje żądanie, po kliknięciu „Wybierz paczkomat”. Nie używamy cookies reklamowych ani śledzących. Szczegóły w <a href="regulamin.html#cookies">Polityce cookies</a>.</p>
-  <div class="cookie-banner-actions">
-    <button type="button" id="cookieNecessary">Tylko niezbędne</button>
-    <button type="button" id="cookieAcceptAll" class="primary">Akceptuj wszystkie</button>
-  </div>
-</div>
-<script src="js/cookie-consent.js" defer></script>
 </body>
 </html>
